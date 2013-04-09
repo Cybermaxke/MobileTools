@@ -1,0 +1,74 @@
+<project xmlns="http://maven.apache.org/POM/4.0.0" xmlns:xsi="http://www.w3.org/2001/XMLSchema-instance" xsi:schemaLocation="http://maven.apache.org/POM/4.0.0 http://maven.apache.org/xsd/maven-4.0.0.xsd">
+	<modelVersion>4.0.0</modelVersion>
+	<groupId>cybermaxke</groupId>
+	<artifactId>mobiletools</artifactId>
+	<version>1.0</version>
+	<name>MobileTools</name>
+
+	<!-- Build properties -->
+	<properties>
+		<BukkitVersion>1.5.1-R0.1-SNAPSHOT</BukkitVersion>
+		<Author>Cybermaxke</Author>
+		<MainClass>me.cybermaxke.mobiletools.MobileTools</MainClass>
+	</properties>
+
+	<!-- Repositories -->
+	<repositories>
+		<repository>
+			<id>bukkit-repo</id>
+			<url>http://repo.bukkit.org/content/groups/public/</url>
+		</repository>
+	</repositories>
+
+	<!-- Dependencies -->
+	<dependencies>
+		<dependency>
+			<groupId>org.bukkit</groupId>
+			<artifactId>craftbukkit</artifactId>
+			<version>${BukkitVersion}</version>
+		</dependency>
+	</dependencies>
+
+	<!-- Build configuration -->
+	<build>
+		<defaultGoal>clean package</defaultGoal>
+		<plugins>
+			<!-- Source compiler plugin -->
+			<plugin>
+				<groupId>org.apache.maven.plugins</groupId>
+				<artifactId>maven-compiler-plugin</artifactId>
+				<version>2.5.1</version>
+				<configuration>
+					<source>1.6</source>
+					<target>1.6</target>
+				</configuration>
+			</plugin>
+
+			<!-- Adding resources to the base folder -->
+			<plugin>
+				<artifactId>maven-resources-plugin</artifactId>
+				<version>2.6</version>
+				<executions>
+					<execution>
+						<id>copy-resources</id>
+						<phase>validate</phase>
+						<goals>
+							<goal>copy-resources</goal>
+						</goals>
+						<configuration>
+							<outputDirectory>${basedir}</outputDirectory>
+							<resources>
+								<resource>
+									<directory>${basedir}/src/main/resources</directory>
+									<filtering>true</filtering>
+								</resource>
+							</resources>
+						</configuration>
+					</execution>
+				</executions>
+			</plugin>
+		</plugins>
+	</build>
+	<description>A set with personal inventories you can use.</description>
+</project>
+</project>

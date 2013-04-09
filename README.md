@@ -1,0 +1,1 @@
+With this plugin can you open a portable workbench, furnace, anvil, enchanting table, chest and brewing stand. And they are easy accessible trough a command.
