@@ -4,6 +4,7 @@
 	<artifactId>mobiletools</artifactId>
 	<version>1.0</version>
 	<name>MobileTools</name>
+	<description>A set with personal inventories you can use.</description>
 
 	<!-- Build properties -->
 	<properties>
@@ -31,9 +32,7 @@
 
 	<!-- Build configuration -->
 	<build>
-		<defaultGoal>clean package</defaultGoal>
 		<plugins>
-			<!-- Source compiler plugin -->
 			<plugin>
 				<groupId>org.apache.maven.plugins</groupId>
 				<artifactId>maven-compiler-plugin</artifactId>
@@ -44,14 +43,13 @@
 				</configuration>
 			</plugin>
 
-			<!-- Adding resources to the base folder -->
 			<plugin>
 				<artifactId>maven-resources-plugin</artifactId>
 				<version>2.6</version>
 				<executions>
 					<execution>
 						<id>copy-resources</id>
-						<phase>validate</phase>
+						<phase>compile</phase>
 						<goals>
 							<goal>copy-resources</goal>
 						</goals>
@@ -67,8 +65,22 @@
 					</execution>
 				</executions>
 			</plugin>
+
+			<plugin>
+				<groupId>org.apache.maven.plugins</groupId>
+				<artifactId>maven-jar-plugin</artifactId>
+				<version>2.3.2</version>
+				<configuration>
+					<archive>
+						<manifest>
+							<addClasspath>true</addClasspath>
+						</manifest>
+						<manifestEntries>
+							<Class-Path>.</Class-Path>
+						</manifestEntries>
+					</archive>
+				</configuration>
+			</plugin>
 		</plugins>
 	</build>
-	<description>A set with personal inventories you can use.</description>
-</project>
 </project>
