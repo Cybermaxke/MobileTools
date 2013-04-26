@@ -4,7 +4,7 @@
 	<!-- Project information -->
 	<groupId>cybermaxke</groupId>
 	<artifactId>mobiletools</artifactId>
-	<version>1.0</version>
+	<version>dev-SNAPSHOT</version>
 	<name>MobileTools</name>
 	<description>A set with personal inventories you can use.</description>
 
