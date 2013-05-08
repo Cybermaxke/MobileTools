@@ -16,35 +16,10 @@
  * along with TagUtils. If not, see <http://www.gnu.org/licenses/>.
  * 
  */
-package me.cybermaxke.tagutils;
+package me.cybermaxke.mobiletools.tagutils;
 
-public final class TagShort extends Tag<Short> {
+import java.util.HashMap;
 
-	public TagShort(String name, Short value) {
-		super(name, value);
-	}
-
-	public TagShort(Short value) {
-		super("", value);
-	}
-
-	@Override
-	public String getTagName() {
-		return "TAG_Short";
-	}
-
-	@Override
-	public byte getTypeId() {
-		return 2;
-	}
-
-	@Override
-	public TagShort clone() {
-		return new TagShort(this.getName(), this.getValue());
-	}
-	
-	@Override
-	public boolean equals(Object other) {
-		return other instanceof TagShort && ((TagShort) other).getValue() == this.getValue();
-	}
+public final class TagMap extends HashMap<String, Tag<?>> {
+	private static final long serialVersionUID = -4676480939347943246L;
 }

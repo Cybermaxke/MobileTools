@@ -16,35 +16,35 @@
  * along with TagUtils. If not, see <http://www.gnu.org/licenses/>.
  * 
  */
-package me.cybermaxke.tagutils;
+package me.cybermaxke.mobiletools.tagutils;
 
-public final class TagDouble extends Tag<Double> {
+public final class TagFloat extends Tag<Float> {
 
-	public TagDouble(String name, Double value) {
+	public TagFloat(String name, Float value) {
 		super(name, value);
 	}
-	
-	public TagDouble(Double value) {
+
+	public TagFloat(Float value) {
 		super("", value);
 	}
 
 	@Override
 	public String getTagName() {
-		return "TAG_Double";
+		return "TAG_Float";
 	}
 
 	@Override
 	public byte getTypeId() {
-		return 6;
+		return 5;
 	}
 
 	@Override
-	public TagDouble clone() {
-		return new TagDouble(this.getName(), this.getValue());
+	public TagFloat clone() {
+		return new TagFloat(this.getName(), this.getValue());
 	}
 	
 	@Override
 	public boolean equals(Object other) {
-		return other instanceof TagDouble && ((TagDouble) other).getValue() == this.getValue();
+		return other instanceof TagFloat && ((TagFloat) other).getValue() == this.getValue();
 	}
 }

@@ -16,35 +16,35 @@
  * along with TagUtils. If not, see <http://www.gnu.org/licenses/>.
  * 
  */
-package me.cybermaxke.tagutils;
+package me.cybermaxke.mobiletools.tagutils;
 
-public final class TagString extends Tag<String> {
+public final class TagLong extends Tag<Long> {
 
-	public TagString(String name, String value) {
+	public TagLong(String name, Long value) {
 		super(name, value);
 	}
 
-	public TagString(String value) {
+	public TagLong(Long value) {
 		super("", value);
 	}
 
 	@Override
 	public String getTagName() {
-		return "TAG_String";
+		return "TAG_Long";
 	}
 
 	@Override
 	public byte getTypeId() {
-		return 8;
+		return 4;
 	}
 
 	@Override
-	public TagString clone() {
-		return new TagString(this.getName(), this.getValue());
+	public TagLong clone() {
+		return new TagLong(this.getName(), this.getValue());
 	}
 	
 	@Override
 	public boolean equals(Object other) {
-		return other instanceof TagString && ((TagString) other).getValue().equals(this.getValue());
+		return other instanceof TagLong && ((TagLong) other).getValue() == this.getValue();
 	}
 }

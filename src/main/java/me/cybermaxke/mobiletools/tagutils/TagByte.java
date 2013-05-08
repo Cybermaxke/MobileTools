@@ -16,42 +16,35 @@
  * along with TagUtils. If not, see <http://www.gnu.org/licenses/>.
  * 
  */
-package me.cybermaxke.tagutils;
+package me.cybermaxke.mobiletools.tagutils;
 
-import java.util.ArrayList;
-import java.util.List;
+public final class TagByte extends Tag<Byte> {
 
-public final class TagList extends Tag<List<Tag<?>>> {
-
-	public TagList(String name, List<Tag<?>> value) {
+	public TagByte(String name, Byte value) {
 		super(name, value);
 	}
-	
-	public TagList(String name) {
-		super(name, new ArrayList<Tag<?>>());
-	}
-	
-	public TagList() {
-		this("");
+
+	public TagByte(Byte value) {
+		super("", value);
 	}
 
 	@Override
 	public String getTagName() {
-		return "TAG_List";
+		return "TAG_Byte";
 	}
 
 	@Override
 	public byte getTypeId() {
-		return 9;
+		return 1;
 	}
 
 	@Override
-	public TagList clone() {
-		return new TagList(this.getName(), this.getValue());
+	public TagByte clone() {
+		return new TagByte(this.getName(), this.getValue());
 	}
-	
+
 	@Override
 	public boolean equals(Object other) {
-		return other instanceof TagList && ((TagList) other).equals(this.getValue());
+		return other instanceof TagByte && ((TagByte) other).getValue() == this.getValue();
 	}
 }

@@ -16,7 +16,7 @@
  * along with TagUtils. If not, see <http://www.gnu.org/licenses/>.
  * 
  */
-package me.cybermaxke.tagutils;
+package me.cybermaxke.mobiletools.tagutils;
 
 import java.util.ArrayList;
 import java.util.Collection;

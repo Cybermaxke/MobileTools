@@ -16,30 +16,35 @@
  * along with TagUtils. If not, see <http://www.gnu.org/licenses/>.
  * 
  */
-package me.cybermaxke.tagutils;
+package me.cybermaxke.mobiletools.tagutils;
 
-public abstract class Tag<T> {
-	private String name;
-	private T value;
-	
-	protected Tag(String name, T value) {
-		this.name = name;
-		this.value = value;
+public final class TagIntegerArray extends Tag<int[]> {
+
+	public TagIntegerArray(String name, int[] value) {
+		super(name, value);
 	}
 
-	public String getName() {
-		return this.name;
+	public TagIntegerArray(int[] value) {
+		super("", value);
 	}
 
-	public T getValue() {
-		return this.value;
+	@Override
+	public String getTagName() {
+		return "TAG_Int_Array";
 	}
 
-	public abstract String getTagName();
+	@Override
+	public byte getTypeId() {
+		return 11;
+	}
 
-	public abstract byte getTypeId();
+	@Override
+	public TagIntegerArray clone() {
+		return new TagIntegerArray(this.getName(), this.getValue());
+	}
 	
-	public abstract Tag<T> clone();
-	
-	public abstract boolean equals(Object other);
+	@Override
+	public boolean equals(Object other) {
+		return other instanceof TagIntegerArray && ((TagIntegerArray) other).getValue() == this.getValue();
+	}
 }

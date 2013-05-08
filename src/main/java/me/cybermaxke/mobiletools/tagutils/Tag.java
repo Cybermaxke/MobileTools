@@ -16,35 +16,30 @@
  * along with TagUtils. If not, see <http://www.gnu.org/licenses/>.
  * 
  */
-package me.cybermaxke.tagutils;
+package me.cybermaxke.mobiletools.tagutils;
 
-public final class TagByte extends Tag<Byte> {
-
-	public TagByte(String name, Byte value) {
-		super(name, value);
+public abstract class Tag<T> {
+	private String name;
+	private T value;
+	
+	protected Tag(String name, T value) {
+		this.name = name;
+		this.value = value;
 	}
 
-	public TagByte(Byte value) {
-		super("", value);
+	public String getName() {
+		return this.name;
 	}
 
-	@Override
-	public String getTagName() {
-		return "TAG_Byte";
+	public T getValue() {
+		return this.value;
 	}
 
-	@Override
-	public byte getTypeId() {
-		return 1;
-	}
+	public abstract String getTagName();
 
-	@Override
-	public TagByte clone() {
-		return new TagByte(this.getName(), this.getValue());
-	}
-
-	@Override
-	public boolean equals(Object other) {
-		return other instanceof TagByte && ((TagByte) other).getValue() == this.getValue();
-	}
+	public abstract byte getTypeId();
+	
+	public abstract Tag<T> clone();
+	
+	public abstract boolean equals(Object other);
 }

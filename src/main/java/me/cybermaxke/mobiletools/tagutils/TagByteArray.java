@@ -16,10 +16,35 @@
  * along with TagUtils. If not, see <http://www.gnu.org/licenses/>.
  * 
  */
-package me.cybermaxke.tagutils;
+package me.cybermaxke.mobiletools.tagutils;
 
-import java.util.HashMap;
+public final class TagByteArray extends Tag<byte[]> {
 
-public final class TagMap extends HashMap<String, Tag<?>> {
-	private static final long serialVersionUID = -4676480939347943246L;
+	public TagByteArray(String name, byte[] value) {
+		super(name, value);
+	}
+	
+	public TagByteArray(byte[] value) {
+		super("", value);
+	}
+
+	@Override
+	public String getTagName() {
+		return "TAG_Byte_Array";
+	}
+
+	@Override
+	public byte getTypeId() {
+		return 7;
+	}
+	
+	@Override
+	public TagByteArray clone() {
+		return new TagByteArray(this.getName(), this.getValue());
+	}
+
+	@Override
+	public boolean equals(Object other) {
+		return other instanceof TagByteArray && ((TagByteArray) other).getValue() == this.getValue();
+	}
 }
