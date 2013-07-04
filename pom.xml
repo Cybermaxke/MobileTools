@@ -12,9 +12,8 @@
 	<properties>
 		<project.build.sourceEncoding>UTF-8</project.build.sourceEncoding>
 		<project.reporting.outputEncoding>UTF-8</project.reporting.outputEncoding>
-		<BukkitVersion>1.5.2-R0.1</BukkitVersion>
-		<Author>Cybermaxke</Author>
-		<MainClass>me.cybermaxke.mobiletools.MobileTools</MainClass>
+		<author>Cybermaxke</author>
+		<mainclass>me.cybermaxke.mobiletools.MobileTools</mainclass>
 	</properties>
 
 	<!-- Distribution management -->
@@ -38,7 +37,7 @@
 		<dependency>
 			<groupId>org.bukkit</groupId>
 			<artifactId>craftbukkit</artifactId>
-			<version>${BukkitVersion}</version>
+			<version>1.6.1-R0.1-SNAPSHOT</version>
 		</dependency>
 	</dependencies>
 

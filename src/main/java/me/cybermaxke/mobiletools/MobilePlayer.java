@@ -1,3 +1,21 @@
+/**
+ * 
+ * This software is part of the MobileTools
+ * 
+ * MobileTools is free software: you can redistribute it and/or modify
+ * it under the terms of the GNU General Public License as published by
+ * the Free Software Foundation, either version 3 of the License, or 
+ * any later version.
+ * 
+ * MobileTools is distributed in the hope that it will be useful,
+ * but WITHOUT ANY WARRANTY; without even the implied warranty of
+ * MERCHANTABILITY or FITNESS FOR A PARTICULAR PURPOSE. See the
+ * GNU General Public License for more details.
+ * 
+ * You should have received a copy of the GNU General Public License
+ * along with MobileTools. If not, see <http://www.gnu.org/licenses/>.
+ * 
+ */
 package me.cybermaxke.mobiletools;
 
 import java.io.File;
@@ -5,20 +23,20 @@ import java.io.File;
 import me.cybermaxke.mobiletools.tagutils.TagCompound;
 import me.cybermaxke.mobiletools.tagutils.TagUtils;
 
-import net.minecraft.server.v1_5_R3.Block;
-import net.minecraft.server.v1_5_R3.ContainerAnvil;
-import net.minecraft.server.v1_5_R3.ContainerEnchantTable;
-import net.minecraft.server.v1_5_R3.ContainerWorkbench;
-import net.minecraft.server.v1_5_R3.EntityHuman;
-import net.minecraft.server.v1_5_R3.EntityPlayer;
-import net.minecraft.server.v1_5_R3.IInventory;
-import net.minecraft.server.v1_5_R3.ItemStack;
-import net.minecraft.server.v1_5_R3.Packet100OpenWindow;
-import net.minecraft.server.v1_5_R3.TileEntityBrewingStand;
-import net.minecraft.server.v1_5_R3.TileEntityFurnace;
+import net.minecraft.server.v1_6_R1.Block;
+import net.minecraft.server.v1_6_R1.ContainerAnvil;
+import net.minecraft.server.v1_6_R1.ContainerEnchantTable;
+import net.minecraft.server.v1_6_R1.ContainerWorkbench;
+import net.minecraft.server.v1_6_R1.EntityHuman;
+import net.minecraft.server.v1_6_R1.EntityPlayer;
+import net.minecraft.server.v1_6_R1.IInventory;
+import net.minecraft.server.v1_6_R1.ItemStack;
+import net.minecraft.server.v1_6_R1.Packet100OpenWindow;
+import net.minecraft.server.v1_6_R1.TileEntityBrewingStand;
+import net.minecraft.server.v1_6_R1.TileEntityFurnace;
 
 import org.bukkit.Bukkit;
-import org.bukkit.craftbukkit.v1_5_R3.entity.CraftPlayer;
+import org.bukkit.craftbukkit.v1_6_R1.entity.CraftPlayer;
 import org.bukkit.entity.Player;
 import org.bukkit.inventory.Inventory;
 
@@ -132,7 +150,7 @@ public class MobilePlayer {
 			if (iinventory == this.enchantSlots) {
 				ItemStack itemstack = iinventory.getItem(0);
 
-				if (itemstack != null && itemstack.w()) {
+				if (itemstack != null && itemstack.x()) {
 					this.costs[0] = 8;
 					this.costs[1] = 21;
 					this.costs[2] = 30;
