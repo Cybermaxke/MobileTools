@@ -27,8 +27,12 @@
 	<!-- Repositories -->
 	<repositories>
 		<repository>
-			<id>bukkit-repo</id>
-			<url>http://repo.bukkit.org/content/groups/public/</url>
+			<id>cybermaxkes-repo</id>
+			<url>http://dl.dropbox.com/u/104060836/mvn-repo</url>
+			<snapshots>
+				<enabled>true</enabled>
+				<updatePolicy>always</updatePolicy>
+			</snapshots>
 		</repository>
 	</repositories>
 
