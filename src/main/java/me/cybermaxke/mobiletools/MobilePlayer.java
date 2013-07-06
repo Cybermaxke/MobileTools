@@ -39,6 +39,8 @@ import org.bukkit.Bukkit;
 import org.bukkit.craftbukkit.v1_6_R1.entity.CraftPlayer;
 import org.bukkit.entity.Player;
 import org.bukkit.inventory.Inventory;
+import org.bukkit.permissions.Permission;
+import org.bukkit.permissions.PermissionDefault;
 
 public class MobilePlayer {
 	private Player player;
@@ -51,7 +53,7 @@ public class MobilePlayer {
 	public MobilePlayer(Player player) {
 		this.player = player;
 		this.ep = ((CraftPlayer) player).getHandle();
-		this.chest = Bukkit.createInventory(player, 27);
+		this.chest = Bukkit.createInventory(player, this.getChestSize());
 		this.furnace = new EntityFurnace(this.ep);
 		this.brewingStand = new EntityBrewingStand(this.ep);
 		File f = new File(MobileTools.getInstance().getDataFolder() + File.separator + "PlayerData");
@@ -113,6 +115,31 @@ public class MobilePlayer {
 		this.ep.activeContainer = container;
 		this.ep.activeContainer.windowId = c;
 		this.ep.activeContainer.addSlotListener(this.ep);
+	}
+
+	public void updateChestSize() {
+		int newSize = this.getChestSize();
+		if (this.chest.getSize() == newSize) {
+			return;
+		}
+
+		org.bukkit.inventory.ItemStack[] items = this.chest.getContents();
+		this.chest = Bukkit.createInventory(this.player, newSize);
+
+		for (int i = 0; i < (items.length > this.chest.getSize() ? this.chest.getSize() : items.length); i++) {
+			this.chest.setItem(i, items[i]);
+		}
+	}
+
+	public int getChestSize() {
+		int maxSize = 54;
+		int size = 9;
+		for (int i = 0; i < (maxSize / 9); i++) {
+			if (this.player.hasPermission(new Permission("mobiletools.chestsize." + (i * 9), PermissionDefault.OP))) {
+				size = i * 9;
+			}
+		}
+		return size;
 	}
 
 	public void openChest() {

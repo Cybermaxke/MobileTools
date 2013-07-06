@@ -59,6 +59,7 @@ public class MobileToolsCommands implements CommandExecutor {
 				return true;
 			}
 
+			mp.updateChestSize();
 			mp.openChest();
 			return true;
 		}
