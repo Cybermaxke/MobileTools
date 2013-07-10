@@ -29,9 +29,9 @@ import java.util.List;
 import java.util.Map;
 import java.util.Map.Entry;
 
-import net.minecraft.server.v1_6_R1.*;
+import net.minecraft.server.v1_6_R2.*;
 
-import org.bukkit.craftbukkit.v1_6_R1.inventory.CraftItemStack;
+import org.bukkit.craftbukkit.v1_6_R2.inventory.CraftItemStack;
 import org.bukkit.inventory.Inventory;
 import org.bukkit.inventory.ItemStack;
 
@@ -183,14 +183,14 @@ public class TagUtils {
 	}
 
 	public static TagCompound getItemStackAsTag(ItemStack itemstack) {
-		net.minecraft.server.v1_6_R1.ItemStack is = CraftItemStack.asNMSCopy(itemstack);
+		net.minecraft.server.v1_6_R2.ItemStack is = CraftItemStack.asNMSCopy(itemstack);
 		NBTTagCompound c = is.save(new NBTTagCompound());
 		return (TagCompound) createTag(c);
 	}
 
 	public static ItemStack getItemStackFromTag(TagCompound tag) {
 		NBTTagCompound c = (NBTTagCompound) createTag(tag);
-		return CraftItemStack.asBukkitCopy(net.minecraft.server.v1_6_R1.ItemStack.createStack(c));
+		return CraftItemStack.asBukkitCopy(net.minecraft.server.v1_6_R2.ItemStack.createStack(c));
 	}
 
 	public static TagCompound getInventoryAsTag(Inventory inventory) {
@@ -207,7 +207,7 @@ public class TagUtils {
 	public static TagCompound getInventoryAsTag(IInventory inventory) {
 		TagCompound t = new TagCompound();
 		for (int i = 0; i < inventory.getSize(); i++) {
-			net.minecraft.server.v1_6_R1.ItemStack is = inventory.getItem(i);
+			net.minecraft.server.v1_6_R2.ItemStack is = inventory.getItem(i);
 			if (is != null) {
 				t.setCompound("Slot" + i, (TagCompound)createTag(is.save(new NBTTagCompound())));
 			}
@@ -227,7 +227,7 @@ public class TagUtils {
 	public static <T extends IInventory> T getInventoryFromTag(T inventory, TagCompound tag) {
 		for (int i = 0; i < inventory.getSize(); i++) {
 			if (tag.hasKey("Slot" + i)) {
-				inventory.setItem(i, net.minecraft.server.v1_6_R1.ItemStack.createStack((NBTTagCompound)createTag(tag.getCompound("Slot" + i))));
+				inventory.setItem(i, net.minecraft.server.v1_6_R2.ItemStack.createStack((NBTTagCompound)createTag(tag.getCompound("Slot" + i))));
 			}
 		}
 		return inventory;
@@ -239,7 +239,7 @@ public class TagUtils {
 	}
 
 	public static ItemStack setTag(ItemStack itemstack, TagCompound tag) {
-		net.minecraft.server.v1_6_R1.ItemStack is = CraftItemStack.asNMSCopy(itemstack);
+		net.minecraft.server.v1_6_R2.ItemStack is = CraftItemStack.asNMSCopy(itemstack);
 		is.tag = (NBTTagCompound) (tag == null ? null : createTag(tag));
 		return CraftItemStack.asCraftMirror(is);
 	}
