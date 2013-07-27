@@ -134,7 +134,7 @@ public class MobilePlayer {
 	public int getChestSize() {
 		int maxSize = 54;
 		int size = 9;
-		for (int i = 1; i < (1 + maxSize / 9); i++) {
+		for (int i = 1; i <= (maxSize / 9); i++) {
 			if (this.player.hasPermission(new Permission("mobiletools.chestsize." + (i * 9), PermissionDefault.OP))) {
 				size = i * 9;
 			}

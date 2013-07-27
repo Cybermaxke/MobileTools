@@ -23,11 +23,14 @@ import java.io.DataOutputStream;
 import java.io.File;
 import java.io.FileInputStream;
 import java.io.FileOutputStream;
+import java.io.RandomAccessFile;
 import java.lang.reflect.Field;
 import java.util.ArrayList;
 import java.util.List;
 import java.util.Map;
 import java.util.Map.Entry;
+import java.util.zip.GZIPInputStream;
+import java.util.zip.GZIPOutputStream;
 
 import net.minecraft.server.v1_6_R2.*;
 
@@ -150,9 +153,11 @@ public class TagUtils {
 
 		try {
 			FileOutputStream fos = new FileOutputStream(target);
-			DataOutputStream dos = new DataOutputStream(fos);
+			GZIPOutputStream gos = new GZIPOutputStream(fos);
+			DataOutputStream dos = new DataOutputStream(gos);
 			NBTBase.a(createTag(tag), dos);
 			dos.close();
+			gos.close();
 			fos.close();
 		} catch (Exception e) {
 			return false;
@@ -166,9 +171,9 @@ public class TagUtils {
 			return null;
 		}
 
-		try {		
+		try {
 			FileInputStream fis = new FileInputStream(target);
-			DataInputStream dis = new DataInputStream(fis);
+			DataInputStream dis = new DataInputStream(isGzip(target) ? new GZIPInputStream(fis) : fis);
 			NBTBase t = NBTBase.b(dis, 0);
 			dis.close();
 			fis.close();
@@ -176,6 +181,19 @@ public class TagUtils {
 		} catch (Exception e) {}
 
 		return null;
+	}
+
+	public static boolean isGzip(File f) {
+		try {
+			RandomAccessFile raf = new RandomAccessFile(f, "r");
+			int magic = raf.read() & 0xff | (raf.read() << 8) & 0xff00;
+			raf.close();
+			return magic == GZIPInputStream.GZIP_MAGIC;
+		} catch (Exception e) {
+			e.printStackTrace();
+		}
+
+		return false;
 	}
 
 	public static <T extends Tag<?>> T load(Class<T> clazz, File target) {
