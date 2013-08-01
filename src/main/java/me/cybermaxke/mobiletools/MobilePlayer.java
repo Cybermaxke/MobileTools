@@ -18,11 +18,6 @@
  */
 package me.cybermaxke.mobiletools;
 
-import java.io.File;
-
-import me.cybermaxke.mobiletools.tagutils.TagCompound;
-import me.cybermaxke.mobiletools.tagutils.TagUtils;
-
 import net.minecraft.server.v1_6_R2.Block;
 import net.minecraft.server.v1_6_R2.ContainerAnvil;
 import net.minecraft.server.v1_6_R2.ContainerEnchantTable;
@@ -35,48 +30,33 @@ import net.minecraft.server.v1_6_R2.Packet100OpenWindow;
 import net.minecraft.server.v1_6_R2.TileEntityBrewingStand;
 import net.minecraft.server.v1_6_R2.TileEntityFurnace;
 
-import org.bukkit.Bukkit;
 import org.bukkit.craftbukkit.v1_6_R2.entity.CraftPlayer;
+
+import org.bukkit.Bukkit;
 import org.bukkit.entity.Player;
 import org.bukkit.inventory.Inventory;
 import org.bukkit.permissions.Permission;
 import org.bukkit.permissions.PermissionDefault;
 
 public class MobilePlayer {
+	private MobilePlayerData data;
+
 	private Player player;
-	private EntityPlayer ep;
+	private EntityPlayer handle;
+
 	private Inventory chest;
 	private EntityFurnace furnace;
 	private EntityBrewingStand brewingStand;
-	private File dataFile;
 
-	public MobilePlayer(Player player) {
+	public MobilePlayer(MobileTools plugin, Player player) {
 		this.player = player;
-		this.ep = ((CraftPlayer) player).getHandle();
+		this.handle = ((CraftPlayer) player).getHandle();
 		this.chest = Bukkit.createInventory(player, this.getChestSize());
-		this.furnace = new EntityFurnace(this.ep);
-		this.brewingStand = new EntityBrewingStand(this.ep);
-		File f = new File(MobileTools.getInstance().getDataFolder() + File.separator + "PlayerData");
-		if (!f.exists()) {
-			f.mkdirs();
-		}
-		this.dataFile = new File(f, player.getName() + ".data");
-		if (!this.dataFile.exists()) {
-			try {
-				this.dataFile.createNewFile();
-			} catch (Exception e) {}
-		} else {
-			TagCompound t = (TagCompound) TagUtils.load(this.dataFile);
-			if (t.hasKey("Chest")) {
-				this.chest = TagUtils.getInventoryFromTag(this.chest, t.getCompound("Chest"));
-			}
-			if (t.hasKey("Furnace")) {
-				this.furnace = TagUtils.getInventoryFromTag(this.furnace, t.getCompound("Furnace"));
-			}
-			if (t.hasKey("BrewingStand")) {
-				this.brewingStand = TagUtils.getInventoryFromTag(this.brewingStand, t.getCompound("BrewingStand"));
-			}
-		}
+		this.furnace = new EntityFurnace(this.handle);
+		this.brewingStand = new EntityBrewingStand(this.handle);
+
+		this.data = plugin.getPlayerData(player.getName());
+		this.data.load();
 	}
 
 	protected EntityFurnace getFurnace() {
@@ -88,33 +68,35 @@ public class MobilePlayer {
 	}
 
 	public void openWorkbench() {
-		WorkbenchContainer container = new WorkbenchContainer(this.ep);
+		WorkbenchContainer container = new WorkbenchContainer(this.handle);
 
-		int c = this.ep.nextContainerCounter();
-		this.ep.playerConnection.sendPacket(new Packet100OpenWindow(c, 1, "Crafting", 9, true));
-		this.ep.activeContainer = container;
-		this.ep.activeContainer.windowId = c;
-		this.ep.activeContainer.addSlotListener(this.ep);
+		int c = this.handle.nextContainerCounter();
+		this.handle.playerConnection
+				.sendPacket(new Packet100OpenWindow(c, 1, "Crafting", 9, true));
+		this.handle.activeContainer = container;
+		this.handle.activeContainer.windowId = c;
+		this.handle.activeContainer.addSlotListener(this.handle);
 	}
 
 	public void openEnchantingTable() {
-		EnchantTableContainer container = new EnchantTableContainer(this.ep);
+		EnchantTableContainer container = new EnchantTableContainer(this.handle);
 		
-		int c = this.ep.nextContainerCounter();
-		this.ep.playerConnection.sendPacket(new Packet100OpenWindow(c, 4, "Enchant", 9, true));
-		this.ep.activeContainer = container;
-		this.ep.activeContainer.windowId = c;
-		this.ep.activeContainer.addSlotListener(this.ep);
+		int c = this.handle.nextContainerCounter();
+		this.handle.playerConnection.sendPacket(new Packet100OpenWindow(c, 4, "Enchant", 9, true));
+		this.handle.activeContainer = container;
+		this.handle.activeContainer.windowId = c;
+		this.handle.activeContainer.addSlotListener(this.handle);
 	}
 
 	public void openAnvil() {
-		AnvilContainer container = new AnvilContainer(this.ep);
+		AnvilContainer container = new AnvilContainer(this.handle);
 
-		int c = this.ep.nextContainerCounter();
-		this.ep.playerConnection.sendPacket(new Packet100OpenWindow(c, 8, "Repairing", 9, true));
-		this.ep.activeContainer = container;
-		this.ep.activeContainer.windowId = c;
-		this.ep.activeContainer.addSlotListener(this.ep);
+		int c = this.handle.nextContainerCounter();
+		this.handle.playerConnection
+				.sendPacket(new Packet100OpenWindow(c, 8, "Repairing", 9, true));
+		this.handle.activeContainer = container;
+		this.handle.activeContainer.windowId = c;
+		this.handle.activeContainer.addSlotListener(this.handle);
 	}
 
 	public void updateChestSize() {
@@ -126,7 +108,8 @@ public class MobilePlayer {
 		org.bukkit.inventory.ItemStack[] items = this.chest.getContents();
 		this.chest = Bukkit.createInventory(this.player, newSize);
 
-		for (int i = 0; i < (items.length > this.chest.getSize() ? this.chest.getSize() : items.length); i++) {
+		for (int i = 0; i < (items.length > this.chest.getSize() ? this.chest.getSize() :
+				items.length); i++) {
 			this.chest.setItem(i, items[i]);
 		}
 	}
@@ -135,7 +118,8 @@ public class MobilePlayer {
 		int maxSize = 54;
 		int size = 9;
 		for (int i = 1; i <= (maxSize / 9); i++) {
-			if (this.player.hasPermission(new Permission("mobiletools.chestsize." + (i * 9), PermissionDefault.OP))) {
+			if (this.player.hasPermission(new Permission("mobiletools.chestsize." + (i * 9),
+					PermissionDefault.OP))) {
 				size = i * 9;
 			}
 		}
@@ -147,19 +131,27 @@ public class MobilePlayer {
 	}
 
 	public void openFurnace() {
-		this.ep.openFurnace(this.furnace);
+		this.handle.openFurnace(this.furnace);
 	}
 
 	public void openBrewingStand() {
-		this.ep.openBrewingStand(this.brewingStand);
+		this.handle.openBrewingStand(this.brewingStand);
 	}
 
 	public void save() {
-		TagCompound t = new TagCompound();
-		t.setCompound("Chest", TagUtils.getInventoryAsTag(this.chest));
-		t.setCompound("Furnace", TagUtils.getInventoryAsTag(this.furnace));
-		t.setCompound("BrewingStand", TagUtils.getInventoryAsTag(this.brewingStand));
-		TagUtils.save(this.dataFile, t);
+		this.data.saveInventory("Chest", this.chest);
+		this.data.saveInventory("Furnace", this.furnace);
+		this.data.saveInventory("BrewingStand", this.brewingStand);
+
+		this.data.save();
+	}
+
+	public void load() {
+		this.data.load();
+
+		this.data.loadInventory("Chest", this.chest);
+		this.data.loadInventory("Furnace", this.furnace);
+		this.data.loadInventory("BrewingStand", this.brewingStand);
 	}
 
 	public void remove() {

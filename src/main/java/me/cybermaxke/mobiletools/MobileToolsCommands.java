@@ -25,17 +25,20 @@ import org.bukkit.command.CommandSender;
 import org.bukkit.entity.Player;
 import org.bukkit.permissions.Permission;
 import org.bukkit.permissions.PermissionDefault;
-import org.bukkit.plugin.java.JavaPlugin;
 
 public class MobileToolsCommands implements CommandExecutor {
-	public Permission workbench = new Permission("mobiletools.workbench", PermissionDefault.OP);
-	public Permission chest = new Permission("mobiletools.chest", PermissionDefault.OP);
-	public Permission furnace = new Permission("mobiletools.furnace", PermissionDefault.OP);
-	public Permission anvil = new Permission("mobiletools.anvil", PermissionDefault.OP);
-	public Permission brewingstand = new Permission("mobiletools.brewingstand", PermissionDefault.OP);
-	public Permission enchantingtable = new Permission("mobiletools.enchantingtable", PermissionDefault.OP);
+	private MobileTools plugin;
 
-	public MobileToolsCommands(JavaPlugin plugin) {
+	private Permission workbench = new Permission("mobiletools.workbench", PermissionDefault.OP);
+	private Permission chest = new Permission("mobiletools.chest", PermissionDefault.OP);
+	private Permission furnace = new Permission("mobiletools.furnace", PermissionDefault.OP);
+	private Permission anvil = new Permission("mobiletools.anvil", PermissionDefault.OP);
+	private Permission brewingstand = new Permission("mobiletools.brewingstand", PermissionDefault.OP);
+	private Permission enchantingtable = new Permission("mobiletools.enchantingtable", PermissionDefault.OP);
+
+	public MobileToolsCommands(MobileTools plugin) {
+		this.plugin = plugin;
+
 		plugin.getCommand("Chest").setExecutor(this);
 		plugin.getCommand("Craft").setExecutor(this);
 		plugin.getCommand("Furnace").setExecutor(this);
@@ -52,7 +55,7 @@ public class MobileToolsCommands implements CommandExecutor {
 		}
 
 		Player p = (Player) sender;
-		MobilePlayer mp = MobilePlayers.getPlayer(p);
+		MobilePlayer mp = this.plugin.getPlayer(p);
 		if (label.equalsIgnoreCase("Chest")) {
 			if (!p.hasPermission(this.chest)) {
 				sender.sendMessage(ChatColor.RED + "You don't have permission to perform that command.");
