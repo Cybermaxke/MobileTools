@@ -28,8 +28,8 @@ import net.minecraft.server.v1_6_R2.IInventory;
 import net.minecraft.server.v1_6_R2.NBTTagCompound;
 
 public class MobilePlayerData {
-	private File folder;
-	private File file;
+	private final File folder;
+	private final File file;
 	private NBTTagCompound tag;
 
 	public MobilePlayerData(MobileTools plugin, String name) {

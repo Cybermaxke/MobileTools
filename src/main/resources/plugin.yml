@@ -4,6 +4,9 @@ version: ${project.version}
 description: ${project.description}
 author: ${author}
 commands:
+   MobileTools:
+      description: Base command for admins.
+      usage: /MobileTools
    Chest:
       description: Opens a personal chest.
       usage: /Chest

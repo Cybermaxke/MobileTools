@@ -16,34 +16,40 @@
  * along with MobileTools. If not, see <http://www.gnu.org/licenses/>.
  * 
  */
-package me.cybermaxke.mobiletools;
+package me.cybermaxke.mobiletools.utils;
 
-import org.bukkit.Bukkit;
-import org.bukkit.entity.Player;
-import org.bukkit.scheduler.BukkitRunnable;
+import java.util.Random;
 
-public class MobilePlayerTask extends BukkitRunnable {
-	private final MobileTools plugin;
-	private int i;
+public class RandomValue {
+	private Random random = new Random();
+	private int min, max;
 
-	public MobilePlayerTask(MobileTools plugin) {
-		this.runTaskTimer(plugin, 0, 1);
-		this.plugin = plugin;
+	public RandomValue(int min, int max) {
+		this.min = min;
+		this.max = max;
 	}
 
-	@Override
-	public void run() {
-		++this.i;
-		for (Player p : Bukkit.getServer().getOnlinePlayers()) {
-			MobilePlayer mp = this.plugin.getPlayer(p);
-			mp.getBrewingStand().h();
-			mp.getFurnace().h();
-			if (this.i > 400) {
-				mp.save();
-			}
-		}
-		if (this.i > 400) {
-			this.i = 0;
-		}
+	/**
+	 * Gets a random value between the min and the max.
+	 * @return value
+	 */
+	public int getRandom() {
+		return this.min + this.random.nextInt(this.max - this.min);
+	}
+
+	/**
+	 * Gets the minimum value.
+	 * @return value
+	 */
+	public int getMin() {
+		return this.min;
+	}
+
+	/**
+	 * Gets the maximum value.
+	 * @return value
+	 */
+	public int getMax() {
+		return this.max;
 	}
 }

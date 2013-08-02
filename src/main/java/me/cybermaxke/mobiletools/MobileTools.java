@@ -38,16 +38,19 @@ public class MobileTools extends JavaPlugin implements Listener {
 	private final Map<String, MobilePlayerData> data = new HashMap<String, MobilePlayerData>();
 
 	private File playerData;
+	private MobileConfiguration config;
 
 	@Override
 	public void onEnable() {
 		this.playerData = new File(this.getDataFolder() + File.separator + "PlayerData");
+		this.config = new MobileConfiguration(this);
 
 		new MobileToolsCommands(this);
 		new MobilePlayerTask(this);
 		new AlphaChestConverter(this);
 
 		this.getServer().getPluginManager().registerEvents(this, this);
+		this.config.load();
 	}
 
 	@Override
@@ -72,6 +75,14 @@ public class MobileTools extends JavaPlugin implements Listener {
 		if (e.getPlayer() instanceof Player) {
 			this.getPlayer((Player) e.getPlayer()).save();
 		}
+	}
+
+	/**
+	 * Gets the configuration.
+	 * @return config
+	 */
+	public MobileConfiguration getConfiguration() {
+		return this.config;
 	}
 
 	/**

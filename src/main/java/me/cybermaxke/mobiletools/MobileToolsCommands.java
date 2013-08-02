@@ -24,20 +24,14 @@ import org.bukkit.command.CommandExecutor;
 import org.bukkit.command.CommandSender;
 import org.bukkit.entity.Player;
 import org.bukkit.permissions.Permission;
-import org.bukkit.permissions.PermissionDefault;
 
 public class MobileToolsCommands implements CommandExecutor {
-	private MobileTools plugin;
-
-	private Permission workbench = new Permission("mobiletools.workbench", PermissionDefault.OP);
-	private Permission chest = new Permission("mobiletools.chest", PermissionDefault.OP);
-	private Permission furnace = new Permission("mobiletools.furnace", PermissionDefault.OP);
-	private Permission anvil = new Permission("mobiletools.anvil", PermissionDefault.OP);
-	private Permission brewingstand = new Permission("mobiletools.brewingstand", PermissionDefault.OP);
-	private Permission enchantingtable = new Permission("mobiletools.enchantingtable", PermissionDefault.OP);
+	private final MobileTools plugin;
+	private final MobileConfiguration config;
 
 	public MobileToolsCommands(MobileTools plugin) {
 		this.plugin = plugin;
+		this.config = plugin.getConfiguration();
 
 		plugin.getCommand("Chest").setExecutor(this);
 		plugin.getCommand("Craft").setExecutor(this);
@@ -45,78 +39,94 @@ public class MobileToolsCommands implements CommandExecutor {
 		plugin.getCommand("Anvil").setExecutor(this);
 		plugin.getCommand("Brew").setExecutor(this);
 		plugin.getCommand("Enchant").setExecutor(this);
+		plugin.getCommand("MobileTools").setExecutor(this);
 	}
 
 	@Override
 	public boolean onCommand(CommandSender sender, Command cmd, String label, String[] args) {
+		if (label.equalsIgnoreCase("MobileTools")) {
+			if (!sender.hasPermission(this.getPerm("cmd.perm"))) {
+				sender.sendMessage(ChatColor.RED + "You don't have permission to perform that command.");
+				return true;
+			}
+
+			if (args.length > 0) {
+				if (args[0].equalsIgnoreCase("Reload")) {
+					this.config.load();
+					return true;
+				} else if (args[0].equalsIgnoreCase("Help")) {
+					sender.sendMessage("------------------ MobileTools ------------------");
+					sender.sendMessage("'/MobileTools Help' - Shows the admin help page.");
+					sender.sendMessage("'/MobileTools Reload' - Reloads the config.");
+					return true;
+				}
+				/**
+				 * TODO: Adding a command to convert the files.
+				 */
+			}
+
+			sender.sendMessage("This command uses sub commands, you can list them by" +
+					" using '/MobileTools Help'");
+			return true;
+		}
+
 		if (!(sender instanceof Player)) {
 			sender.sendMessage("You have to be a player to perform that command.");
 			return true;
 		}
 
-		Player p = (Player) sender;
-		MobilePlayer mp = this.plugin.getPlayer(p);
+		Player player = (Player) sender;
+		MobilePlayer mp = this.plugin.getPlayer(player);
+
 		if (label.equalsIgnoreCase("Chest")) {
-			if (!p.hasPermission(this.chest)) {
+			if (!player.hasPermission(this.getPerm("chest.cmd.perm"))) {
 				sender.sendMessage(ChatColor.RED + "You don't have permission to perform that command.");
-				return true;
 			}
 
 			mp.updateChestSize();
 			mp.openChest();
-			return true;
-		}
-
-		if (label.equalsIgnoreCase("Craft")) {
-			if (!p.hasPermission(this.workbench)) {
+		} else if (label.equalsIgnoreCase("Craft")) {
+			if (!player.hasPermission(this.getPerm("craft.cmd.perm"))) {
 				sender.sendMessage(ChatColor.RED + "You don't have permission to perform that command.");
 				return true;
 			}
 
 			mp.openWorkbench();
-			return true;
-		}
-
-		if (label.equalsIgnoreCase("Furnace")) {
-			if (!p.hasPermission(this.furnace)) {
+		} else if (label.equalsIgnoreCase("Furnace")) {
+			if (!player.hasPermission(this.getPerm("furnace.cmd.perm"))) {
 				sender.sendMessage(ChatColor.RED + "You don't have permission to perform that command.");
 				return true;
 			}
 
 			mp.openFurnace();
-			return true;
-		}
-
-		if (label.equalsIgnoreCase("Anvil")) {
-			if (!p.hasPermission(this.anvil)) {
+		} else if (label.equalsIgnoreCase("Anvil")) {
+			if (!player.hasPermission(this.getPerm("anvil.cmd.perm"))) {
 				sender.sendMessage(ChatColor.RED + "You don't have permission to perform that command.");
-				return true;
 			}
 
 			mp.openAnvil();
-			return true;
-		}
-
-		if (label.equalsIgnoreCase("Brew")) {
-			if (!p.hasPermission(this.brewingstand)) {
+		} else if (label.equalsIgnoreCase("Brew")) {
+			if (!player.hasPermission(this.getPerm("brew.cmd.perm"))) {
 				sender.sendMessage(ChatColor.RED + "You don't have permission to perform that command.");
 				return true;
 			}
 
 			mp.openBrewingStand();
-			return true;
-		}
-
-		if (label.equalsIgnoreCase("Enchant")) {
-			if (!p.hasPermission(this.enchantingtable)) {
+		} else if (label.equalsIgnoreCase("Enchant")) {
+			if (!player.hasPermission(this.getPerm("enchant.cmd.perm"))) {
 				sender.sendMessage(ChatColor.RED + "You don't have permission to perform that command.");
 				return true;
 			}
 
 			mp.openEnchantingTable();
-			return true;
+		} else {
+			return false;
 		}
 
-		return false;
+		return true;
+	}
+
+	private Permission getPerm(String path) {
+		return this.config.getPermission(path);
 	}
 }

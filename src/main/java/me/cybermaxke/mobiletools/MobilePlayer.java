@@ -39,10 +39,11 @@ import org.bukkit.permissions.Permission;
 import org.bukkit.permissions.PermissionDefault;
 
 public class MobilePlayer {
-	private MobilePlayerData data;
+	private final MobilePlayerData data;
+	private final MobileConfiguration config;
 
-	private Player player;
-	private EntityPlayer handle;
+	private final Player player;
+	private final EntityPlayer handle;
 
 	private Inventory chest;
 	private EntityFurnace furnace;
@@ -55,16 +56,17 @@ public class MobilePlayer {
 		this.furnace = new EntityFurnace(this.handle);
 		this.brewingStand = new EntityBrewingStand(this.handle);
 
+		this.config = plugin.getConfiguration();
 		this.data = plugin.getPlayerData(player.getName());
 		this.data.load();
 	}
 
 	protected EntityFurnace getFurnace() {
-		return this.furnace;	
+		return this.furnace;
 	}
 
 	protected EntityBrewingStand getBrewingStand() {
-		return this.brewingStand;	
+		return this.brewingStand;
 	}
 
 	public void openWorkbench() {
@@ -79,7 +81,7 @@ public class MobilePlayer {
 	}
 
 	public void openEnchantingTable() {
-		EnchantTableContainer container = new EnchantTableContainer(this.handle);
+		EnchantTableContainer container = new EnchantTableContainer(this.config, this.handle);
 		
 		int c = this.handle.nextContainerCounter();
 		this.handle.playerConnection.sendPacket(new Packet100OpenWindow(c, 4, "Enchant", 9, true));
@@ -159,9 +161,11 @@ public class MobilePlayer {
 	}
 
 	public class EnchantTableContainer extends ContainerEnchantTable {
+		private final MobileConfiguration config;
 
-		public EnchantTableContainer(EntityHuman entity) {
+		public EnchantTableContainer(MobileConfiguration config, EntityHuman entity) {
 			super(entity.inventory, entity.world, 0, 0, 0);
+			this.config = config;
 		}
 
 		@Override
@@ -170,9 +174,9 @@ public class MobilePlayer {
 				ItemStack itemstack = iinventory.getItem(0);
 
 				if (itemstack != null && itemstack.x()) {
-					this.costs[0] = 8;
-					this.costs[1] = 21;
-					this.costs[2] = 30;
+					this.costs[0] = this.config.getRandom("enchant.levels.line1").getRandom();
+					this.costs[1] = this.config.getRandom("enchant.levels.line2").getRandom();
+					this.costs[2] = this.config.getRandom("enchant.levels.line3").getRandom();
 				} else {
 					this.costs[0] = 0;
 					this.costs[1] = 0;
