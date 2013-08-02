@@ -53,6 +53,7 @@ public class MobileToolsCommands implements CommandExecutor {
 			if (args.length > 0) {
 				if (args[0].equalsIgnoreCase("Reload")) {
 					this.config.load();
+					sender.sendMessage("The config file is succesfully reloaded.");
 					return true;
 				} else if (args[0].equalsIgnoreCase("Help")) {
 					sender.sendMessage("------------------ MobileTools ------------------");
@@ -81,6 +82,7 @@ public class MobileToolsCommands implements CommandExecutor {
 		if (label.equalsIgnoreCase("Chest")) {
 			if (!player.hasPermission(this.getPerm("chest.cmd.perm"))) {
 				sender.sendMessage(ChatColor.RED + "You don't have permission to perform that command.");
+				return true;
 			}
 
 			mp.updateChestSize();
@@ -102,6 +104,7 @@ public class MobileToolsCommands implements CommandExecutor {
 		} else if (label.equalsIgnoreCase("Anvil")) {
 			if (!player.hasPermission(this.getPerm("anvil.cmd.perm"))) {
 				sender.sendMessage(ChatColor.RED + "You don't have permission to perform that command.");
+				return true;
 			}
 
 			mp.openAnvil();
