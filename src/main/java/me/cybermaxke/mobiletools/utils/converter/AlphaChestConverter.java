@@ -40,11 +40,14 @@ public class AlphaChestConverter {
 	public AlphaChestConverter(MobileTools plugin) {
 		this.plugin = plugin;
 		this.folder = new File(plugin.getDataFolder() + File.separator + "AlphaChests");
+	}
 
-		try {
-			this.loadInventories();
-		} catch (Exception e) {
-			e.printStackTrace();
+	/**
+	 * Creates the folder.
+	 */
+	public void createFolder() {
+		if (!this.folder.exists()) {
+			this.folder.mkdirs();
 		}
 	}
 
@@ -82,10 +85,7 @@ public class AlphaChestConverter {
 	 * @throws FileNotFoundException 
 	 */
 	public void loadInventories() throws IOException, InvalidConfigurationException {
-		if (!this.folder.exists()) {
-			this.folder.mkdirs();
-			return;
-		}
+		this.createFolder();
 
 		for (File file : this.folder.listFiles()) {
 			String name = file.getName();
@@ -98,7 +98,13 @@ public class AlphaChestConverter {
 				this.loadInventory(inventory, file);
 
 				data.saveInventory("Chest", inventory);
-				file.renameTo(new File(this.folder, file.getName() + ".converted"));
+
+				File file1 = new File(this.folder, file.getName() + ".converted");
+				if (file1.exists()) {
+					file1.delete();
+				}
+
+				file.renameTo(file1);
 			}
 		}
 	}

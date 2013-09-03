@@ -39,18 +39,20 @@ public class MobileTools extends JavaPlugin implements Listener {
 
 	private File playerData;
 	private MobileConfiguration config;
+	private AlphaChestConverter alphaCoverter;
 
 	@Override
 	public void onEnable() {
 		this.playerData = new File(this.getDataFolder() + File.separator + "PlayerData");
 		this.config = new MobileConfiguration(this);
+		this.alphaCoverter = new AlphaChestConverter(this);
 
 		new MobileToolsCommands(this);
 		new MobilePlayerTask(this);
-		new AlphaChestConverter(this);
 
 		this.getServer().getPluginManager().registerEvents(this, this);
 		this.config.load();
+		this.alphaCoverter.createFolder();
 	}
 
 	@Override
@@ -91,6 +93,10 @@ public class MobileTools extends JavaPlugin implements Listener {
 	 */
 	public File getPlayerData() {
 		return this.playerData;
+	}
+
+	public AlphaChestConverter getAlphaChestConverter() {
+		return this.alphaCoverter;
 	}
 
 	/**

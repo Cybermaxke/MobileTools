@@ -7,21 +7,6 @@ commands:
    MobileTools:
       description: Base command for admins.
       usage: /MobileTools
-   Chest:
-      description: Opens a personal chest.
-      usage: /Chest
-   Craft:
-      description: Opens a personal workbench.
-      usage: /Craft
-   Furnace:
-      description: Opens a personal furnace.
-      usage: /Furnace
-   Anvil:
-      description: Opens a personal anvil.
-      usage: /Anvil
-   Brew:
-      description: Opens a personal brewingstand.
-      usage: /Brew
-   Enchant:
-      description: Opens a personal enchanting table.
-      usage: /Enchant
+   MT:
+      description: Base command for all the tools.
+      usage: /MT

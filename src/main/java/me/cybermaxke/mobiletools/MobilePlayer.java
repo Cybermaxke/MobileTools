@@ -69,6 +69,10 @@ public class MobilePlayer {
 		return this.brewingStand;
 	}
 
+	public void openEnderChest() {
+		this.player.openInventory(this.player.getEnderChest());
+	}
+
 	public void openWorkbench() {
 		WorkbenchContainer container = new WorkbenchContainer(this.handle);
 
