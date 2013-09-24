@@ -58,7 +58,8 @@ public class MobilePlayer {
 
 		this.config = plugin.getConfiguration();
 		this.data = plugin.getPlayerData(player.getName());
-		this.data.load();
+
+		this.load();
 	}
 
 	protected EntityFurnace getFurnace() {
