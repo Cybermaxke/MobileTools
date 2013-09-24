@@ -28,14 +28,14 @@ import java.io.RandomAccessFile;
 import java.util.zip.GZIPInputStream;
 import java.util.zip.GZIPOutputStream;
 
-import net.minecraft.server.v1_6_R2.IInventory;
-import net.minecraft.server.v1_6_R2.ItemStack;
-import net.minecraft.server.v1_6_R2.NBTBase;
-import net.minecraft.server.v1_6_R2.NBTTagCompound;
-import net.minecraft.server.v1_6_R2.NBTTagList;
+import net.minecraft.server.v1_6_R3.IInventory;
+import net.minecraft.server.v1_6_R3.ItemStack;
+import net.minecraft.server.v1_6_R3.NBTBase;
+import net.minecraft.server.v1_6_R3.NBTTagCompound;
+import net.minecraft.server.v1_6_R3.NBTTagList;
 
-import org.bukkit.craftbukkit.v1_6_R2.inventory.CraftInventory;
-import org.bukkit.craftbukkit.v1_6_R2.inventory.CraftItemStack;
+import org.bukkit.craftbukkit.v1_6_R3.inventory.CraftInventory;
+import org.bukkit.craftbukkit.v1_6_R3.inventory.CraftItemStack;
 
 import org.bukkit.inventory.Inventory;
 
@@ -130,7 +130,7 @@ public class NbtUtils {
 			for (int i = 0; i < list.size(); i++) {
 				NBTTagCompound tag2 = (NBTTagCompound) list.get(i);
 
-				byte slot = tag2.getByte("Slot");
+				int slot = tag2.getByte("Slot") & 0xFF;
 				if (slot < inventory.getSize()) {
 					inventory.setItem(slot, ItemStack.createStack(tag2));
 				}

@@ -45,6 +45,7 @@ public class MobileConfiguration {
 		 * Command permissions.
 		 */
 		this.addDefault("cmd.perm", new Permission("mobiletools.cmd", PermissionDefault.OP));
+		this.addDefault("craft.cmd.perm", new Permission("mobiletools.craft.cmd", PermissionDefault.OP));
 		this.addDefault("chest.cmd.perm", new Permission("mobiletools.chest.cmd", PermissionDefault.OP));
 		this.addDefault("workbench.cmd.perm", new Permission("mobiletools.workbench.cmd", PermissionDefault.OP));
 		this.addDefault("furnace.cmd.perm", new Permission("mobiletools.furnace.cmd", PermissionDefault.OP));

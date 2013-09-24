@@ -67,9 +67,6 @@ public class MobileToolsCommands implements CommandExecutor {
 					sender.sendMessage("Files succesfully converted!");
 					return true;
 				}
-				/**
-				 * TODO: Adding a command to convert the files.
-				 */
 			}
 
 			sender.sendMessage("This command uses sub commands, you can list them by" +
