@@ -31,10 +31,13 @@ import net.minecraft.server.v1_6_R3.TileEntityBrewingStand;
 import net.minecraft.server.v1_6_R3.TileEntityFurnace;
 
 import org.bukkit.craftbukkit.v1_6_R3.entity.CraftPlayer;
+import org.bukkit.craftbukkit.v1_6_R3.inventory.CraftInventoryBrewer;
+import org.bukkit.craftbukkit.v1_6_R3.inventory.CraftInventoryFurnace;
 
 import org.bukkit.Bukkit;
 import org.bukkit.entity.Player;
 import org.bukkit.inventory.Inventory;
+import org.bukkit.inventory.InventoryHolder;
 import org.bukkit.permissions.Permission;
 import org.bukkit.permissions.PermissionDefault;
 
@@ -261,6 +264,18 @@ public class MobilePlayer {
 		public Block q() {
 		    return Block.BREWING_STAND;
 		}
+
+		@Override
+		public InventoryHolder getOwner() {
+			return new InventoryHolder() {
+
+				@Override
+				public Inventory getInventory() {
+					return new CraftInventoryBrewer(EntityBrewingStand.this);
+				}
+
+			};
+		}
 	}
 
 	public class EntityFurnace extends TileEntityFurnace {
@@ -287,6 +302,18 @@ public class MobilePlayer {
 		@Override
 		public Block q() {
 		    return Block.FURNACE;
+		}
+
+		@Override
+		public InventoryHolder getOwner() {
+			return new InventoryHolder() {
+
+				@Override
+				public Inventory getInventory() {
+					return new CraftInventoryFurnace(EntityFurnace.this);
+				}
+
+			};
 		}
 	}
 }
