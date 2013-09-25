@@ -33,9 +33,11 @@ import net.minecraft.server.v1_6_R3.TileEntityFurnace;
 import org.bukkit.craftbukkit.v1_6_R3.entity.CraftPlayer;
 import org.bukkit.craftbukkit.v1_6_R3.inventory.CraftInventoryBrewer;
 import org.bukkit.craftbukkit.v1_6_R3.inventory.CraftInventoryFurnace;
+import org.bukkit.craftbukkit.v1_6_R3.inventory.CraftItemStack;
 
 import org.bukkit.Bukkit;
 import org.bukkit.entity.Player;
+import org.bukkit.event.enchantment.PrepareItemEnchantEvent;
 import org.bukkit.inventory.Inventory;
 import org.bukkit.inventory.InventoryHolder;
 import org.bukkit.permissions.Permission;
@@ -186,10 +188,12 @@ public class MobilePlayer {
 
 	public class EnchantTableContainer extends ContainerEnchantTable {
 		private final MobileConfiguration config;
+		private final Player player;
 
-		public EnchantTableContainer(MobileConfiguration config, EntityHuman entity) {
+		public EnchantTableContainer(MobileConfiguration config, EntityPlayer entity) {
 			super(entity.inventory, entity.world, 0, 0, 0);
 			this.config = config;
+			this.player = entity.getBukkitEntity();
 		}
 
 		@Override
@@ -201,11 +205,23 @@ public class MobilePlayer {
 					this.costs[0] = this.config.getRandom("enchant.levels.line1").getRandom();
 					this.costs[1] = this.config.getRandom("enchant.levels.line2").getRandom();
 					this.costs[2] = this.config.getRandom("enchant.levels.line3").getRandom();
-				} else {
-					this.costs[0] = 0;
-					this.costs[1] = 0;
-					this.costs[2] = 0;
+
+					CraftItemStack item = CraftItemStack.asCraftMirror(itemstack);
+
+					PrepareItemEnchantEvent event = new PrepareItemEnchantEvent(this.player,
+							this.getBukkitView(), null, item, this.costs, 0);
+					event.setCancelled(!itemstack.x());
+
+					this.player.getServer().getPluginManager().callEvent(event);
+
+					if (!event.isCancelled()) {
+						return;
+					}
 				}
+
+				this.costs[0] = 0;
+				this.costs[1] = 0;
+				this.costs[2] = 0;
 			}
 		}
 
@@ -252,7 +268,7 @@ public class MobilePlayer {
 
 		@Override
 		public int p() {
-		    return 0;
+			return 0;
 		}
 
 		@Override
@@ -262,7 +278,7 @@ public class MobilePlayer {
 
 		@Override
 		public Block q() {
-		    return Block.BREWING_STAND;
+			return Block.BREWING_STAND;
 		}
 
 		@Override
@@ -291,7 +307,7 @@ public class MobilePlayer {
 
 		@Override
 		public int p() {
-		    return 0;
+			return 0;
 		}
 
 		@Override
@@ -301,7 +317,7 @@ public class MobilePlayer {
 
 		@Override
 		public Block q() {
-		    return Block.FURNACE;
+			return Block.FURNACE;
 		}
 
 		@Override

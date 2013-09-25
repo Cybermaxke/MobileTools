@@ -29,7 +29,7 @@ public class MobilePlayerTask extends BukkitRunnable {
 	private int updateTicks;
 
 	public MobilePlayerTask(MobileTools plugin, int updateDelay) {
-		this.runTaskTimer(plugin, this.updateDelay, this.updateDelay);
+		this.runTaskTimer(plugin, updateDelay, updateDelay);
 
 		this.plugin = plugin;
 		this.updateDelay = updateDelay;

@@ -56,15 +56,24 @@ public class MobileTools extends JavaPlugin implements Listener {
 		/**
 		 * Command permissions.
 		 */
-		this.config.addDefault("cmd", new Permission("mobiletools.cmd", PermissionDefault.OP));
-		this.config.addDefault("craft.cmd", new Permission("mobiletools.craft.cmd", PermissionDefault.OP));
-		this.config.addDefault("chest.cmd", new Permission("mobiletools.chest.cmd", PermissionDefault.OP));
-		this.config.addDefault("workbench.cmd", new Permission("mobiletools.workbench.cmd", PermissionDefault.OP));
-		this.config.addDefault("furnace.cmd", new Permission("mobiletools.furnace.cmd", PermissionDefault.OP));
-		this.config.addDefault("anvil.cmd", new Permission("mobiletools.anvil.cmd", PermissionDefault.OP));
-		this.config.addDefault("brew.cmd", new Permission("mobiletools.brew.cmd", PermissionDefault.OP));
-		this.config.addDefault("enchant.cmd", new Permission("mobiletools.enchant.cmd", PermissionDefault.OP));
-		this.config.addDefault("ender.cmd", new Permission("mobiletools.ender.cmd", PermissionDefault.OP));
+		this.config.addDefault("cmd",
+				new Permission("mobiletools.cmd", PermissionDefault.OP));
+		this.config.addDefault("craft.cmd",
+				new Permission("mobiletools.craft.cmd", PermissionDefault.OP));
+		this.config.addDefault("chest.cmd",
+				new Permission("mobiletools.chest.cmd", PermissionDefault.OP));
+		this.config.addDefault("workbench.cmd",
+				new Permission("mobiletools.workbench.cmd", PermissionDefault.OP));
+		this.config.addDefault("furnace.cmd",
+				new Permission("mobiletools.furnace.cmd", PermissionDefault.OP));
+		this.config.addDefault("anvil.cmd",
+				new Permission("mobiletools.anvil.cmd", PermissionDefault.OP));
+		this.config.addDefault("brew.cmd",
+				new Permission("mobiletools.brew.cmd", PermissionDefault.OP));
+		this.config.addDefault("enchant.cmd",
+				new Permission("mobiletools.enchant.cmd", PermissionDefault.OP));
+		this.config.addDefault("ender.cmd",
+				new Permission("mobiletools.ender.cmd", PermissionDefault.OP));
 
 		/**
 		 * Enchanting table levels.
@@ -76,9 +85,12 @@ public class MobileTools extends JavaPlugin implements Listener {
 		/**
 		 * Inventories to lose on death.
 		 */
-		this.config.addDefault("chest.loseondeath", new Permission("mobiletools.chest.loseondeath", PermissionDefault.FALSE));
-		this.config.addDefault("brew.loseondeath", new Permission("mobiletools.brew.loseondeath", PermissionDefault.FALSE));
-		this.config.addDefault("furnace.loseondeath", new Permission("mobiletools.furnace.loseondeath", PermissionDefault.FALSE));
+		this.config.addDefault("chest.loseondeath",
+				new Permission("mobiletools.chest.loseondeath", PermissionDefault.FALSE));
+		this.config.addDefault("brew.loseondeath",
+				new Permission("mobiletools.brew.loseondeath", PermissionDefault.FALSE));
+		this.config.addDefault("furnace.loseondeath",
+				new Permission("mobiletools.furnace.loseondeath", PermissionDefault.FALSE));
 
 		/**
 		 * Delay for furnaces or brewing stand to tick.
