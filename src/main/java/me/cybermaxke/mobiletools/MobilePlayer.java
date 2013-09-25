@@ -201,7 +201,7 @@ public class MobilePlayer {
 			if (iinventory == this.enchantSlots) {
 				ItemStack itemstack = iinventory.getItem(0);
 
-				if (itemstack != null && itemstack.x()) {
+				if (itemstack != null) {
 					this.costs[0] = this.config.getRandom("enchant.levels.line1").getRandom();
 					this.costs[1] = this.config.getRandom("enchant.levels.line2").getRandom();
 					this.costs[2] = this.config.getRandom("enchant.levels.line3").getRandom();
