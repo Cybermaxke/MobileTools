@@ -62,12 +62,28 @@ public class MobilePlayer {
 		this.load();
 	}
 
-	protected EntityFurnace getFurnace() {
+	public Inventory getChest() {
+		return this.chest;
+	}
+
+	public EntityFurnace getFurnace() {
 		return this.furnace;
 	}
 
-	protected EntityBrewingStand getBrewingStand() {
+	public EntityBrewingStand getBrewingStand() {
 		return this.brewingStand;
+	}
+
+	public void clearFurnace() {
+		for (int slot = 0; slot < this.furnace.getSize(); slot++) {
+			this.furnace.setItem(slot, null);
+		}
+	}
+
+	public void clearBrewingStand() {
+		for (int slot = 0; slot < this.brewingStand.getSize(); slot++) {
+			this.brewingStand.setItem(slot, null);
+		}
 	}
 
 	public void openEnderChest() {
@@ -233,7 +249,7 @@ public class MobilePlayer {
 
 		@Override
 		public int p() {
-		    return -1;
+		    return 0;
 		}
 
 		@Override
@@ -260,7 +276,7 @@ public class MobilePlayer {
 
 		@Override
 		public int p() {
-		    return -1;
+		    return 0;
 		}
 
 		@Override

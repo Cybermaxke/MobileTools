@@ -28,38 +28,18 @@ import me.cybermaxke.mobiletools.utils.RandomValue;
 
 import org.bukkit.configuration.file.YamlConfiguration;
 import org.bukkit.permissions.Permission;
-import org.bukkit.permissions.PermissionDefault;
 
 public class MobileConfiguration {
 	private final Map<String, Object> defaults = new HashMap<String, Object>();
 
 	private final File folder;
 	private final File file;
+
 	private YamlConfiguration config;
 
 	public MobileConfiguration(MobileTools plugin) {
 		this.folder = plugin.getDataFolder();
 		this.file = new File(this.folder, "Config.yml");
-
-		/**
-		 * Command permissions.
-		 */
-		this.addDefault("cmd.perm", new Permission("mobiletools.cmd", PermissionDefault.OP));
-		this.addDefault("craft.cmd.perm", new Permission("mobiletools.craft.cmd", PermissionDefault.OP));
-		this.addDefault("chest.cmd.perm", new Permission("mobiletools.chest.cmd", PermissionDefault.OP));
-		this.addDefault("workbench.cmd.perm", new Permission("mobiletools.workbench.cmd", PermissionDefault.OP));
-		this.addDefault("furnace.cmd.perm", new Permission("mobiletools.furnace.cmd", PermissionDefault.OP));
-		this.addDefault("anvil.cmd.perm", new Permission("mobiletools.anvil.cmd", PermissionDefault.OP));
-		this.addDefault("brew.cmd.perm", new Permission("mobiletools.brew.cmd", PermissionDefault.OP));
-		this.addDefault("enchant.cmd.perm", new Permission("mobiletools.enchant.cmd", PermissionDefault.OP));
-		this.addDefault("ender.cmd.perm", new Permission("mobiletools.ender.cmd", PermissionDefault.OP));
-
-		/**
-		 * Enchanting table levels.
-		 */
-		this.addDefault("enchant.levels.line1", new RandomValue(6, 10));
-		this.addDefault("enchant.levels.line2", new RandomValue(17, 22));
-		this.addDefault("enchant.levels.line3", new RandomValue(27, 30));
 	}
 
 	/**

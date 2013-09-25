@@ -22,6 +22,7 @@ import java.io.File;
 import java.util.HashMap;
 import java.util.Map;
 
+import me.cybermaxke.mobiletools.utils.RandomValue;
 import me.cybermaxke.mobiletools.utils.converter.AlphaChestConverter;
 
 import org.bukkit.Bukkit;
@@ -31,6 +32,8 @@ import org.bukkit.event.Listener;
 import org.bukkit.event.inventory.InventoryCloseEvent;
 import org.bukkit.event.player.PlayerJoinEvent;
 import org.bukkit.event.player.PlayerQuitEvent;
+import org.bukkit.permissions.Permission;
+import org.bukkit.permissions.PermissionDefault;
 import org.bukkit.plugin.java.JavaPlugin;
 
 public class MobileTools extends JavaPlugin implements Listener {
@@ -44,15 +47,50 @@ public class MobileTools extends JavaPlugin implements Listener {
 	@Override
 	public void onEnable() {
 		this.playerData = new File(this.getDataFolder() + File.separator + "PlayerData");
-		this.config = new MobileConfiguration(this);
-		this.alphaCoverter = new AlphaChestConverter(this);
 
-		new MobileToolsCommands(this);
-		new MobilePlayerTask(this);
+		this.alphaCoverter = new AlphaChestConverter(this);
+		this.alphaCoverter.createFolder();
+
+		this.config = new MobileConfiguration(this);
+
+		/**
+		 * Command permissions.
+		 */
+		this.config.addDefault("cmd.perm", new Permission("mobiletools.cmd", PermissionDefault.OP));
+		this.config.addDefault("craft.cmd.perm", new Permission("mobiletools.craft.cmd", PermissionDefault.OP));
+		this.config.addDefault("chest.cmd.perm", new Permission("mobiletools.chest.cmd", PermissionDefault.OP));
+		this.config.addDefault("workbench.cmd.perm", new Permission("mobiletools.workbench.cmd", PermissionDefault.OP));
+		this.config.addDefault("furnace.cmd.perm", new Permission("mobiletools.furnace.cmd", PermissionDefault.OP));
+		this.config.addDefault("anvil.cmd.perm", new Permission("mobiletools.anvil.cmd", PermissionDefault.OP));
+		this.config.addDefault("brew.cmd.perm", new Permission("mobiletools.brew.cmd", PermissionDefault.OP));
+		this.config.addDefault("enchant.cmd.perm", new Permission("mobiletools.enchant.cmd", PermissionDefault.OP));
+		this.config.addDefault("ender.cmd.perm", new Permission("mobiletools.ender.cmd", PermissionDefault.OP));
+
+		/**
+		 * Enchanting table levels.
+		 */
+		this.config.addDefault("enchant.levels.line1", new RandomValue(6, 10));
+		this.config.addDefault("enchant.levels.line2", new RandomValue(17, 22));
+		this.config.addDefault("enchant.levels.line3", new RandomValue(27, 30));
+
+		/**
+		 * Inventories to lose on death.
+		 */
+		this.config.addDefault("chest.loseondeath", new Permission("mobiletools.chest.loseondeath", PermissionDefault.FALSE));
+		this.config.addDefault("brew.loseondeath", new Permission("mobiletools.brew.loseondeath", PermissionDefault.FALSE));
+		this.config.addDefault("furnace.loseondeath", new Permission("mobiletools.furnace.loseondeath", PermissionDefault.FALSE));
+
+		/**
+		 * Delay for furnaces or brewing stand to tick.
+		 */
+		this.config.addDefault("updateticks", 3);
+		this.config.load();
+
+		new MobileToolsCommands(this, this.config);
+		new MobileListener(this, this.config);
+		new MobilePlayerTask(this, this.config.getConfig().getInt("updateticks"));
 
 		this.getServer().getPluginManager().registerEvents(this, this);
-		this.config.load();
-		this.alphaCoverter.createFolder();
 	}
 
 	@Override
@@ -143,8 +181,7 @@ public class MobileTools extends JavaPlugin implements Listener {
 			return false;
 		}
 
-		this.players.get(name).remove();
-		this.players.remove(name);
+		this.players.remove(name).remove();
 		return true;
 	}
 }

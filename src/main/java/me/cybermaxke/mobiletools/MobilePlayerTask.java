@@ -24,26 +24,36 @@ import org.bukkit.scheduler.BukkitRunnable;
 
 public class MobilePlayerTask extends BukkitRunnable {
 	private final MobileTools plugin;
-	private int i;
+	private final int updateDelay;
 
-	public MobilePlayerTask(MobileTools plugin) {
-		this.runTaskTimer(plugin, 0, 1);
+	private int updateTicks;
+
+	public MobilePlayerTask(MobileTools plugin, int updateDelay) {
+		this.runTaskTimer(plugin, this.updateDelay, this.updateDelay);
+
 		this.plugin = plugin;
+		this.updateDelay = updateDelay;
 	}
 
 	@Override
 	public void run() {
-		++this.i;
-		for (Player p : Bukkit.getServer().getOnlinePlayers()) {
-			MobilePlayer mp = this.plugin.getPlayer(p);
-			mp.getBrewingStand().h();
-			mp.getFurnace().h();
-			if (this.i > 400) {
+		++this.updateTicks;
+
+		for (Player player : Bukkit.getServer().getOnlinePlayers()) {
+			MobilePlayer mp = this.plugin.getPlayer(player);
+
+			for (int i = 0; i < this.updateDelay; i++) {
+				mp.getBrewingStand().h();
+				mp.getFurnace().h();
+			}
+
+			if (this.updateTicks > (400 / this.updateDelay)) {
 				mp.save();
 			}
 		}
-		if (this.i > 400) {
-			this.i = 0;
+
+		if (this.updateTicks > (400 / this.updateDelay)) {
+			this.updateTicks = 0;
 		}
 	}
 }

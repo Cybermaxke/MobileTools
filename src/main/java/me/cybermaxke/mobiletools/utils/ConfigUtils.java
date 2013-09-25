@@ -61,8 +61,8 @@ public class ConfigUtils {
 	 * @return permission
 	 */
 	public static Permission getPermission(ConfigurationSection section) {
-		PermissionDefault de = getEnumValue(PermissionDefault.class, section.getString("Default"));
-		String perm = section.getString("Permission");
+		PermissionDefault de = getEnumValue(PermissionDefault.class, section.getString("default"));
+		String perm = section.getString("permission");
 		return new Permission(perm, de);
 	}
 
@@ -72,8 +72,8 @@ public class ConfigUtils {
 	 * @param permission
 	 */
 	public static void setPermission(ConfigurationSection section, Permission permission) {
-		section.set("Default", permission.getDefault().toString());
-		section.set("Permission", permission.getName());
+		section.set("default", permission.getDefault().toString());
+		section.set("permission", permission.getName());
 	}
 
 	/**
@@ -82,7 +82,7 @@ public class ConfigUtils {
 	 * @return randomValue
 	 */
 	public static RandomValue getRandom(ConfigurationSection section) {
-		return new RandomValue(section.getInt("Min"), section.getInt("Max"));
+		return new RandomValue(section.getInt("min"), section.getInt("max"));
 	}
 
 	/**
@@ -91,8 +91,8 @@ public class ConfigUtils {
 	 * @param value
 	 */
 	public static void setRandom(ConfigurationSection section, RandomValue value) {
-		section.set("Min", value.getMin());
-		section.set("Max", value.getMax());
+		section.set("min", value.getMin());
+		section.set("max", value.getMax());
 	}
 
 	/**

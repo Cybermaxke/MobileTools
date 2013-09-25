@@ -29,12 +29,12 @@ public class MobileToolsCommands implements CommandExecutor {
 	private final MobileTools plugin;
 	private final MobileConfiguration config;
 
-	public MobileToolsCommands(MobileTools plugin) {
+	public MobileToolsCommands(MobileTools plugin, MobileConfiguration config) {
 		this.plugin = plugin;
-		this.config = plugin.getConfiguration();
+		this.config = config;
 
-		plugin.getCommand("MT").setExecutor(this);
-		plugin.getCommand("MobileTools").setExecutor(this);
+		this.plugin.getCommand("MT").setExecutor(this);
+		this.plugin.getCommand("MobileTools").setExecutor(this);
 	}
 
 	@Override
