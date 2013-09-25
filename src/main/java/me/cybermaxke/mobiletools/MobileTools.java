@@ -56,15 +56,15 @@ public class MobileTools extends JavaPlugin implements Listener {
 		/**
 		 * Command permissions.
 		 */
-		this.config.addDefault("cmd.perm", new Permission("mobiletools.cmd", PermissionDefault.OP));
-		this.config.addDefault("craft.cmd.perm", new Permission("mobiletools.craft.cmd", PermissionDefault.OP));
-		this.config.addDefault("chest.cmd.perm", new Permission("mobiletools.chest.cmd", PermissionDefault.OP));
-		this.config.addDefault("workbench.cmd.perm", new Permission("mobiletools.workbench.cmd", PermissionDefault.OP));
-		this.config.addDefault("furnace.cmd.perm", new Permission("mobiletools.furnace.cmd", PermissionDefault.OP));
-		this.config.addDefault("anvil.cmd.perm", new Permission("mobiletools.anvil.cmd", PermissionDefault.OP));
-		this.config.addDefault("brew.cmd.perm", new Permission("mobiletools.brew.cmd", PermissionDefault.OP));
-		this.config.addDefault("enchant.cmd.perm", new Permission("mobiletools.enchant.cmd", PermissionDefault.OP));
-		this.config.addDefault("ender.cmd.perm", new Permission("mobiletools.ender.cmd", PermissionDefault.OP));
+		this.config.addDefault("cmd", new Permission("mobiletools.cmd", PermissionDefault.OP));
+		this.config.addDefault("craft.cmd", new Permission("mobiletools.craft.cmd", PermissionDefault.OP));
+		this.config.addDefault("chest.cmd", new Permission("mobiletools.chest.cmd", PermissionDefault.OP));
+		this.config.addDefault("workbench.cmd", new Permission("mobiletools.workbench.cmd", PermissionDefault.OP));
+		this.config.addDefault("furnace.cmd", new Permission("mobiletools.furnace.cmd", PermissionDefault.OP));
+		this.config.addDefault("anvil.cmd", new Permission("mobiletools.anvil.cmd", PermissionDefault.OP));
+		this.config.addDefault("brew.cmd", new Permission("mobiletools.brew.cmd", PermissionDefault.OP));
+		this.config.addDefault("enchant.cmd", new Permission("mobiletools.enchant.cmd", PermissionDefault.OP));
+		this.config.addDefault("ender.cmd", new Permission("mobiletools.ender.cmd", PermissionDefault.OP));
 
 		/**
 		 * Enchanting table levels.
