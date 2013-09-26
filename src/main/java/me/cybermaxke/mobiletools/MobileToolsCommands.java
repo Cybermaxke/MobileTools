@@ -43,7 +43,7 @@ public class MobileToolsCommands implements CommandExecutor {
 	@Override
 	public boolean onCommand(CommandSender sender, Command cmd, String label, String[] args) {
 		if (label.equalsIgnoreCase("MobileTools")) {
-			if (!sender.hasPermission(this.getPerm("cmd.perm"))) {
+			if (!sender.hasPermission(this.getPerm("cmd"))) {
 				sender.sendMessage(NO_PERMISSION);
 				return true;
 			}
@@ -100,7 +100,7 @@ public class MobileToolsCommands implements CommandExecutor {
 			sender.sendMessage("'/MT Enchant' - A enchanting table.");
 			sender.sendMessage("'/MT Ender' - Your ender chest.");
 		} else if (args[0].equalsIgnoreCase("Chest")) {
-			if (!player.hasPermission(this.getPerm("chest.cmd.perm"))) {
+			if (!player.hasPermission(this.getPerm("chest.cmd"))) {
 				sender.sendMessage(NO_PERMISSION);
 				return true;
 			}
@@ -122,42 +122,42 @@ public class MobileToolsCommands implements CommandExecutor {
 				mp.openChest();
 			}
 		} else if (args[0].equalsIgnoreCase("Craft")) {
-			if (!player.hasPermission(this.getPerm("craft.cmd.perm"))) {
+			if (!player.hasPermission(this.getPerm("craft.cmd"))) {
 				sender.sendMessage(NO_PERMISSION);
 				return true;
 			}
 
 			mp.openWorkbench();
 		} else if (args[0].equalsIgnoreCase("Furnace")) {
-			if (!player.hasPermission(this.getPerm("furnace.cmd.perm"))) {
+			if (!player.hasPermission(this.getPerm("furnace.cmd"))) {
 				sender.sendMessage(NO_PERMISSION);
 				return true;
 			}
 
 			mp.openFurnace();
 		} else if (args[0].equalsIgnoreCase("Anvil")) {
-			if (!player.hasPermission(this.getPerm("anvil.cmd.perm"))) {
+			if (!player.hasPermission(this.getPerm("anvil.cmd"))) {
 				sender.sendMessage(NO_PERMISSION);
 				return true;
 			}
 
 			mp.openAnvil();
 		} else if (args[0].equalsIgnoreCase("Brew")) {
-			if (!player.hasPermission(this.getPerm("brew.cmd.perm"))) {
+			if (!player.hasPermission(this.getPerm("brew.cmd"))) {
 				sender.sendMessage(NO_PERMISSION);
 				return true;
 			}
 
 			mp.openBrewingStand();
 		} else if (args[0].equalsIgnoreCase("Enchant")) {
-			if (!player.hasPermission(this.getPerm("enchant.cmd.perm"))) {
+			if (!player.hasPermission(this.getPerm("enchant.cmd"))) {
 				sender.sendMessage(NO_PERMISSION);
 				return true;
 			}
 
 			mp.openEnchantingTable();
 		} else if (args[0].equalsIgnoreCase("Ender")) {
-			if (!player.hasPermission(this.getPerm("ender.cmd.perm"))) {
+			if (!player.hasPermission(this.getPerm("ender.cmd"))) {
 				sender.sendMessage(NO_PERMISSION);
 				return true;
 			}
