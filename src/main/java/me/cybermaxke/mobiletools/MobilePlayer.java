@@ -18,22 +18,23 @@
  */
 package me.cybermaxke.mobiletools;
 
-import net.minecraft.server.v1_6_R3.Block;
-import net.minecraft.server.v1_6_R3.ContainerAnvil;
-import net.minecraft.server.v1_6_R3.ContainerEnchantTable;
-import net.minecraft.server.v1_6_R3.ContainerWorkbench;
-import net.minecraft.server.v1_6_R3.EntityHuman;
-import net.minecraft.server.v1_6_R3.EntityPlayer;
-import net.minecraft.server.v1_6_R3.IInventory;
-import net.minecraft.server.v1_6_R3.ItemStack;
-import net.minecraft.server.v1_6_R3.Packet100OpenWindow;
-import net.minecraft.server.v1_6_R3.TileEntityBrewingStand;
-import net.minecraft.server.v1_6_R3.TileEntityFurnace;
+import net.minecraft.server.v1_7_R1.Block;
+import net.minecraft.server.v1_7_R1.Blocks;
+import net.minecraft.server.v1_7_R1.ContainerAnvil;
+import net.minecraft.server.v1_7_R1.ContainerEnchantTable;
+import net.minecraft.server.v1_7_R1.ContainerWorkbench;
+import net.minecraft.server.v1_7_R1.EntityHuman;
+import net.minecraft.server.v1_7_R1.EntityPlayer;
+import net.minecraft.server.v1_7_R1.IInventory;
+import net.minecraft.server.v1_7_R1.ItemStack;
+import net.minecraft.server.v1_7_R1.PacketPlayOutOpenWindow;
+import net.minecraft.server.v1_7_R1.TileEntityBrewingStand;
+import net.minecraft.server.v1_7_R1.TileEntityFurnace;
 
-import org.bukkit.craftbukkit.v1_6_R3.entity.CraftPlayer;
-import org.bukkit.craftbukkit.v1_6_R3.inventory.CraftInventoryBrewer;
-import org.bukkit.craftbukkit.v1_6_R3.inventory.CraftInventoryFurnace;
-import org.bukkit.craftbukkit.v1_6_R3.inventory.CraftItemStack;
+import org.bukkit.craftbukkit.v1_7_R1.entity.CraftPlayer;
+import org.bukkit.craftbukkit.v1_7_R1.inventory.CraftInventoryBrewer;
+import org.bukkit.craftbukkit.v1_7_R1.inventory.CraftInventoryFurnace;
+import org.bukkit.craftbukkit.v1_7_R1.inventory.CraftItemStack;
 
 import org.bukkit.Bukkit;
 import org.bukkit.entity.Player;
@@ -100,7 +101,7 @@ public class MobilePlayer {
 
 		int c = this.handle.nextContainerCounter();
 		this.handle.playerConnection
-				.sendPacket(new Packet100OpenWindow(c, 1, "Crafting", 9, true));
+				.sendPacket(new PacketPlayOutOpenWindow(c, 1, "Crafting", 9, true));
 		this.handle.activeContainer = container;
 		this.handle.activeContainer.windowId = c;
 		this.handle.activeContainer.addSlotListener(this.handle);
@@ -110,7 +111,8 @@ public class MobilePlayer {
 		EnchantTableContainer container = new EnchantTableContainer(this.config, this.handle);
 		
 		int c = this.handle.nextContainerCounter();
-		this.handle.playerConnection.sendPacket(new Packet100OpenWindow(c, 4, "Enchant", 9, true));
+		this.handle.playerConnection.sendPacket(
+				new PacketPlayOutOpenWindow(c, 4, "Enchant", 9, true));
 		this.handle.activeContainer = container;
 		this.handle.activeContainer.windowId = c;
 		this.handle.activeContainer.addSlotListener(this.handle);
@@ -120,8 +122,8 @@ public class MobilePlayer {
 		AnvilContainer container = new AnvilContainer(this.handle);
 
 		int c = this.handle.nextContainerCounter();
-		this.handle.playerConnection
-				.sendPacket(new Packet100OpenWindow(c, 8, "Repairing", 9, true));
+		this.handle.playerConnection.sendPacket(
+				new PacketPlayOutOpenWindow(c, 8, "Repairing", 9, true));
 		this.handle.activeContainer = container;
 		this.handle.activeContainer.windowId = c;
 		this.handle.activeContainer.addSlotListener(this.handle);
@@ -258,7 +260,7 @@ public class MobilePlayer {
 	public class EntityBrewingStand extends TileEntityBrewingStand {
 
 		public EntityBrewingStand(EntityHuman entity) {
-			this.b(entity.world);
+			this.world = entity.world;
 		}
 
 		@Override
@@ -278,7 +280,7 @@ public class MobilePlayer {
 
 		@Override
 		public Block q() {
-			return Block.BREWING_STAND;
+			return Blocks.BREWING_STAND;
 		}
 
 		@Override
@@ -297,7 +299,7 @@ public class MobilePlayer {
 	public class EntityFurnace extends TileEntityFurnace {
 
 		public EntityFurnace(EntityHuman entity) {
-			this.b(entity.world);
+			this.world = entity.world;
 		}
 
 		@Override
@@ -317,7 +319,7 @@ public class MobilePlayer {
 
 		@Override
 		public Block q() {
-			return Block.FURNACE;
+			return Blocks.FURNACE;
 		}
 
 		@Override

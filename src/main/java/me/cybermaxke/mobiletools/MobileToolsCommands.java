@@ -106,6 +106,11 @@ public class MobileToolsCommands implements CommandExecutor {
 			}
 
 			if (args.length > 1) {
+				if (!player.hasPermission(this.getPerm("chest.cmd.other"))) {
+					sender.sendMessage(NO_PERMISSION);
+					return true;
+				}
+
 				Player player1 = this.plugin.getServer().getPlayer(args[1]);
 
 				if (player1 == null || !player1.isOnline()) {

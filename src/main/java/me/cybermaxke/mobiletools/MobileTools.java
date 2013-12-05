@@ -62,6 +62,8 @@ public class MobileTools extends JavaPlugin implements Listener {
 				new Permission("mobiletools.craft.cmd", PermissionDefault.OP));
 		this.config.addDefault("chest.cmd",
 				new Permission("mobiletools.chest.cmd", PermissionDefault.OP));
+		this.config.addDefault("chest.cmd.other",
+				new Permission("mobiletools.chest.cmd.other", PermissionDefault.OP));
 		this.config.addDefault("workbench.cmd",
 				new Permission("mobiletools.workbench.cmd", PermissionDefault.OP));
 		this.config.addDefault("furnace.cmd",

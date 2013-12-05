@@ -18,24 +18,24 @@
  */
 package me.cybermaxke.mobiletools.utils;
 
+import java.io.DataInput;
 import java.io.DataInputStream;
-import java.io.DataOutputStream;
 import java.io.File;
 import java.io.FileInputStream;
 import java.io.FileOutputStream;
 import java.io.IOException;
 import java.io.RandomAccessFile;
+import java.lang.reflect.Method;
 import java.util.zip.GZIPInputStream;
-import java.util.zip.GZIPOutputStream;
 
-import net.minecraft.server.v1_6_R3.IInventory;
-import net.minecraft.server.v1_6_R3.ItemStack;
-import net.minecraft.server.v1_6_R3.NBTBase;
-import net.minecraft.server.v1_6_R3.NBTTagCompound;
-import net.minecraft.server.v1_6_R3.NBTTagList;
+import net.minecraft.server.v1_7_R1.IInventory;
+import net.minecraft.server.v1_7_R1.ItemStack;
+import net.minecraft.server.v1_7_R1.NBTCompressedStreamTools;
+import net.minecraft.server.v1_7_R1.NBTTagCompound;
+import net.minecraft.server.v1_7_R1.NBTTagList;
 
-import org.bukkit.craftbukkit.v1_6_R3.inventory.CraftInventory;
-import org.bukkit.craftbukkit.v1_6_R3.inventory.CraftItemStack;
+import org.bukkit.craftbukkit.v1_7_R1.inventory.CraftInventory;
+import org.bukkit.craftbukkit.v1_7_R1.inventory.CraftItemStack;
 
 import org.bukkit.inventory.Inventory;
 
@@ -91,10 +91,7 @@ public class NbtUtils {
 	 * @throws IOException
 	 */
 	public static void save(File file, NBTTagCompound tag) throws IOException {
-		DataOutputStream dos =
-				new DataOutputStream(new GZIPOutputStream(new FileOutputStream(file)));
-		NBTBase.a(tag, dos);
-		dos.close();
+		NBTCompressedStreamTools.a(tag, new FileOutputStream(file));
 	}
 
 	/**
@@ -112,7 +109,7 @@ public class NbtUtils {
 	 * @param tag
 	 */
 	public static void loadInventory(Inventory inventory, NBTTagCompound tag) {
-		loadInventory(((CraftInventory) inventory).getInventory(), tag);
+		NbtUtils.loadInventory(((CraftInventory) inventory).getInventory(), tag);
 	}
 
 	/**
@@ -125,7 +122,7 @@ public class NbtUtils {
 		 * Loading the items from the new format.
 		 */
 		if (tag.hasKey("Items")) {
-			NBTTagList list = tag.getList("Items");
+			NBTTagList list = tag.getList("Items", 10);
 
 			for (int i = 0; i < list.size(); i++) {
 				NBTTagCompound tag2 = (NBTTagCompound) list.get(i);
@@ -154,8 +151,19 @@ public class NbtUtils {
 	 * @throws IOException
 	 */
 	public static NBTTagCompound load(File file) throws IOException {
-		DataInputStream dis = getDataInput(file);
-		NBTTagCompound tag = (NBTTagCompound) NBTBase.b(dis, 0);
+		DataInputStream dis = NbtUtils.getDataInput(file);
+		NBTTagCompound tag = null;
+
+		try {
+			Method method = NBTCompressedStreamTools.class.getDeclaredMethod(
+					"a", DataInput.class, int.class);
+			method.setAccessible(true);
+
+			tag = (NBTTagCompound) method.invoke(null, dis, 0);
+		} catch (Exception e) {
+			e.printStackTrace();
+		}
+
 		dis.close();
 		return tag;
 	}
