@@ -296,7 +296,7 @@ public class MobilePlayer {
 			 * Setting the tile we will use, this is the only good way!
 			 */
 			try {
-				Field field = CraftFurnace.class.getDeclaredField("brewingStand");
+				Field field = CraftBrewingStand.class.getDeclaredField("brewingStand");
 				field.setAccessible(true);
 
 				Field mfield = Field.class.getDeclaredField("modifiers");
