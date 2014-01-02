@@ -18,6 +18,24 @@
  */
 package me.cybermaxke.mobiletools;
 
+import java.lang.reflect.Field;
+import java.lang.reflect.Modifier;
+
+import org.bukkit.Bukkit;
+import org.bukkit.block.BrewingStand;
+import org.bukkit.block.Furnace;
+import org.bukkit.entity.Player;
+import org.bukkit.event.enchantment.PrepareItemEnchantEvent;
+import org.bukkit.inventory.Inventory;
+import org.bukkit.inventory.InventoryHolder;
+import org.bukkit.permissions.Permission;
+import org.bukkit.permissions.PermissionDefault;
+
+import org.bukkit.craftbukkit.v1_7_R1.block.CraftBrewingStand;
+import org.bukkit.craftbukkit.v1_7_R1.block.CraftFurnace;
+import org.bukkit.craftbukkit.v1_7_R1.entity.CraftPlayer;
+import org.bukkit.craftbukkit.v1_7_R1.inventory.CraftItemStack;
+
 import net.minecraft.server.v1_7_R1.Block;
 import net.minecraft.server.v1_7_R1.Blocks;
 import net.minecraft.server.v1_7_R1.ContainerAnvil;
@@ -30,19 +48,6 @@ import net.minecraft.server.v1_7_R1.ItemStack;
 import net.minecraft.server.v1_7_R1.PacketPlayOutOpenWindow;
 import net.minecraft.server.v1_7_R1.TileEntityBrewingStand;
 import net.minecraft.server.v1_7_R1.TileEntityFurnace;
-
-import org.bukkit.craftbukkit.v1_7_R1.entity.CraftPlayer;
-import org.bukkit.craftbukkit.v1_7_R1.inventory.CraftInventoryBrewer;
-import org.bukkit.craftbukkit.v1_7_R1.inventory.CraftInventoryFurnace;
-import org.bukkit.craftbukkit.v1_7_R1.inventory.CraftItemStack;
-
-import org.bukkit.Bukkit;
-import org.bukkit.entity.Player;
-import org.bukkit.event.enchantment.PrepareItemEnchantEvent;
-import org.bukkit.inventory.Inventory;
-import org.bukkit.inventory.InventoryHolder;
-import org.bukkit.permissions.Permission;
-import org.bukkit.permissions.PermissionDefault;
 
 public class MobilePlayer {
 	private final MobilePlayerData data;
@@ -285,14 +290,25 @@ public class MobilePlayer {
 
 		@Override
 		public InventoryHolder getOwner() {
-			return new InventoryHolder() {
+			BrewingStand brew = new CraftBrewingStand(this.world.getWorld().getBlockAt(0, 0, 0));
 
-				@Override
-				public Inventory getInventory() {
-					return new CraftInventoryBrewer(EntityBrewingStand.this);
-				}
+			/**
+			 * Setting the tile we will use, this is the only good way!
+			 */
+			try {
+				Field field = CraftFurnace.class.getDeclaredField("brewingStand");
+				field.setAccessible(true);
 
-			};
+				Field mfield = Field.class.getDeclaredField("modifiers");
+				mfield.setAccessible(true);
+				mfield.set(field, field.getModifiers() & ~Modifier.FINAL);
+
+				field.set(brew, this);
+			} catch (Exception e) {
+				e.printStackTrace();
+			}
+
+			return brew;
 		}
 	}
 
@@ -324,14 +340,25 @@ public class MobilePlayer {
 
 		@Override
 		public InventoryHolder getOwner() {
-			return new InventoryHolder() {
+			Furnace furnace = new CraftFurnace(this.world.getWorld().getBlockAt(0, 0, 0));
 
-				@Override
-				public Inventory getInventory() {
-					return new CraftInventoryFurnace(EntityFurnace.this);
-				}
+			/**
+			 * Setting the tile we will use, this is the only good way!
+			 */
+			try {
+				Field field = CraftFurnace.class.getDeclaredField("furnace");
+				field.setAccessible(true);
 
-			};
+				Field mfield = Field.class.getDeclaredField("modifiers");
+				mfield.setAccessible(true);
+				mfield.set(field, field.getModifiers() & ~Modifier.FINAL);
+
+				field.set(furnace, this);
+			} catch (Exception e) {
+				e.printStackTrace();
+			}
+
+			return furnace;
 		}
 	}
 }
