@@ -24,8 +24,8 @@ import org.bukkit.inventory.Inventory;
 
 import me.cybermaxke.mobiletools.utils.NbtUtils;
 
-import net.minecraft.server.v1_7_R1.IInventory;
-import net.minecraft.server.v1_7_R1.NBTTagCompound;
+import net.minecraft.server.v1_7_R2.IInventory;
+import net.minecraft.server.v1_7_R2.NBTTagCompound;
 
 public class MobilePlayerData {
 	private final File folder;
