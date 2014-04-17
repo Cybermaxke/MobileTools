@@ -28,14 +28,14 @@ import java.io.RandomAccessFile;
 import java.lang.reflect.Method;
 import java.util.zip.GZIPInputStream;
 
-import net.minecraft.server.v1_7_R2.IInventory;
-import net.minecraft.server.v1_7_R2.ItemStack;
-import net.minecraft.server.v1_7_R2.NBTCompressedStreamTools;
-import net.minecraft.server.v1_7_R2.NBTTagCompound;
-import net.minecraft.server.v1_7_R2.NBTTagList;
+import net.minecraft.server.v1_7_R3.IInventory;
+import net.minecraft.server.v1_7_R3.ItemStack;
+import net.minecraft.server.v1_7_R3.NBTCompressedStreamTools;
+import net.minecraft.server.v1_7_R3.NBTTagCompound;
+import net.minecraft.server.v1_7_R3.NBTTagList;
 
-import org.bukkit.craftbukkit.v1_7_R2.inventory.CraftInventory;
-import org.bukkit.craftbukkit.v1_7_R2.inventory.CraftItemStack;
+import org.bukkit.craftbukkit.v1_7_R3.inventory.CraftInventory;
+import org.bukkit.craftbukkit.v1_7_R3.inventory.CraftItemStack;
 
 import org.bukkit.inventory.Inventory;
 

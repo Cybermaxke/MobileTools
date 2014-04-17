@@ -31,23 +31,23 @@ import org.bukkit.inventory.InventoryHolder;
 import org.bukkit.permissions.Permission;
 import org.bukkit.permissions.PermissionDefault;
 
-import org.bukkit.craftbukkit.v1_7_R2.block.CraftBrewingStand;
-import org.bukkit.craftbukkit.v1_7_R2.block.CraftFurnace;
-import org.bukkit.craftbukkit.v1_7_R2.entity.CraftPlayer;
-import org.bukkit.craftbukkit.v1_7_R2.inventory.CraftItemStack;
+import org.bukkit.craftbukkit.v1_7_R3.block.CraftBrewingStand;
+import org.bukkit.craftbukkit.v1_7_R3.block.CraftFurnace;
+import org.bukkit.craftbukkit.v1_7_R3.entity.CraftPlayer;
+import org.bukkit.craftbukkit.v1_7_R3.inventory.CraftItemStack;
 
-import net.minecraft.server.v1_7_R2.Block;
-import net.minecraft.server.v1_7_R2.Blocks;
-import net.minecraft.server.v1_7_R2.ContainerAnvil;
-import net.minecraft.server.v1_7_R2.ContainerEnchantTable;
-import net.minecraft.server.v1_7_R2.ContainerWorkbench;
-import net.minecraft.server.v1_7_R2.EntityHuman;
-import net.minecraft.server.v1_7_R2.EntityPlayer;
-import net.minecraft.server.v1_7_R2.IInventory;
-import net.minecraft.server.v1_7_R2.ItemStack;
-import net.minecraft.server.v1_7_R2.PacketPlayOutOpenWindow;
-import net.minecraft.server.v1_7_R2.TileEntityBrewingStand;
-import net.minecraft.server.v1_7_R2.TileEntityFurnace;
+import net.minecraft.server.v1_7_R3.Block;
+import net.minecraft.server.v1_7_R3.Blocks;
+import net.minecraft.server.v1_7_R3.ContainerAnvil;
+import net.minecraft.server.v1_7_R3.ContainerEnchantTable;
+import net.minecraft.server.v1_7_R3.ContainerWorkbench;
+import net.minecraft.server.v1_7_R3.EntityHuman;
+import net.minecraft.server.v1_7_R3.EntityPlayer;
+import net.minecraft.server.v1_7_R3.IInventory;
+import net.minecraft.server.v1_7_R3.ItemStack;
+import net.minecraft.server.v1_7_R3.PacketPlayOutOpenWindow;
+import net.minecraft.server.v1_7_R3.TileEntityBrewingStand;
+import net.minecraft.server.v1_7_R3.TileEntityFurnace;
 
 public class MobilePlayer {
 	private final MobilePlayerData data;
