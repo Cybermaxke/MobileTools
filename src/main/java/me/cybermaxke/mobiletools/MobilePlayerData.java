@@ -20,6 +20,7 @@ package me.cybermaxke.mobiletools;
 
 import java.io.File;
 
+import org.bukkit.OfflinePlayer;
 import org.bukkit.inventory.Inventory;
 
 import me.cybermaxke.mobiletools.utils.NbtUtils;
@@ -28,16 +29,30 @@ import net.minecraft.server.v1_7_R3.IInventory;
 import net.minecraft.server.v1_7_R3.NBTTagCompound;
 
 public class MobilePlayerData {
-	private final File folder;
-	private final File file;
+	private File folder;
+	private File file;
 	private NBTTagCompound tag;
 
-	public MobilePlayerData(MobileTools plugin, String name) {
+	public MobilePlayerData(MobileTools plugin, OfflinePlayer player) {
 		this.folder = plugin.getPlayerData();
-		this.file = new File(this.folder, name + ".data");
+		/** Old data format. */
+		File oldFile = new File(this.folder, player.getName() + ".data");
+		/** New data format. */
+		File newFile = new File(this.folder, player.getUniqueId().toString() + ".data");
 
+		if (oldFile.exists()) {
+			if (!newFile.exists()) {
+				this.file = oldFile;
+				this.load();
+			}
+			oldFile.delete();
+		}
+
+		this.file = newFile;
 		if (!this.file.exists()) {
-			this.tag = new NBTTagCompound();
+			if (this.tag == null) {
+				this.tag = new NBTTagCompound();
+			}
 			this.save();
 		} else {
 			this.load();

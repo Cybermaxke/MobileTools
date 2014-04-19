@@ -31,6 +31,7 @@ import java.util.zip.GZIPInputStream;
 import net.minecraft.server.v1_7_R3.IInventory;
 import net.minecraft.server.v1_7_R3.ItemStack;
 import net.minecraft.server.v1_7_R3.NBTCompressedStreamTools;
+import net.minecraft.server.v1_7_R3.NBTReadLimiter;
 import net.minecraft.server.v1_7_R3.NBTTagCompound;
 import net.minecraft.server.v1_7_R3.NBTTagList;
 
@@ -155,11 +156,10 @@ public class NbtUtils {
 		NBTTagCompound tag = null;
 
 		try {
-			Method method = NBTCompressedStreamTools.class.getDeclaredMethod(
-					"a", DataInput.class, int.class);
+			Method method = NBTCompressedStreamTools.class.getDeclaredMethod("a", DataInput.class, int.class, NBTReadLimiter.class);
 			method.setAccessible(true);
 
-			tag = (NBTTagCompound) method.invoke(null, dis, 0);
+			tag = (NBTTagCompound) method.invoke(null, dis, 0, new NBTReadLimiter(Long.MAX_VALUE));
 		} catch (Exception e) {
 			e.printStackTrace();
 		}

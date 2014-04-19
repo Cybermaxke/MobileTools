@@ -32,6 +32,7 @@ import org.bukkit.configuration.file.YamlConfiguration;
 import org.bukkit.inventory.Inventory;
 import org.bukkit.inventory.ItemStack;
 
+@SuppressWarnings("deprecation")
 public class AlphaChestConverter {
 	private final String chestExtension = ".chest.yml";
 	private final MobileTools plugin;
@@ -59,8 +60,7 @@ public class AlphaChestConverter {
 	 * @throws IOException 
 	 * @throws FileNotFoundException 
 	 */
-	public void loadInventory(Inventory inventory, File file) throws IOException,
-			InvalidConfigurationException {
+	public void loadInventory(Inventory inventory, File file) throws IOException, InvalidConfigurationException {
 		YamlConfiguration yaml = new AlphaYamlConfiguration();
 		yaml.load(file);
 
@@ -92,7 +92,7 @@ public class AlphaChestConverter {
 
 			if (name.endsWith(this.chestExtension)) {
 				String playerName = name.replace(this.chestExtension, "");
-				MobilePlayerData data = this.plugin.getPlayerData(playerName);
+				MobilePlayerData data = this.plugin.getPlayerData(Bukkit.getOfflinePlayer(playerName));
 
 				Inventory inventory = Bukkit.createInventory(null, 6 * 9);
 				this.loadInventory(inventory, file);

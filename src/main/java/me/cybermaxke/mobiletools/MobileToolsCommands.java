@@ -25,9 +25,9 @@ import org.bukkit.command.CommandSender;
 import org.bukkit.entity.Player;
 import org.bukkit.permissions.Permission;
 
+@SuppressWarnings("deprecation")
 public class MobileToolsCommands implements CommandExecutor {
-	private final static String NO_PERMISSION = ChatColor.RED +
-			"You don't have permission to perform that command.";
+	private final static String NO_PERMISSION = ChatColor.RED + "You don't have permission to perform that command.";
 
 	private final MobileTools plugin;
 	private final MobileConfiguration config;

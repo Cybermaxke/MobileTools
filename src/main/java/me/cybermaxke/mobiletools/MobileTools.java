@@ -21,11 +21,13 @@ package me.cybermaxke.mobiletools;
 import java.io.File;
 import java.util.HashMap;
 import java.util.Map;
+import java.util.UUID;
 
 import me.cybermaxke.mobiletools.utils.RandomValue;
 import me.cybermaxke.mobiletools.utils.converter.AlphaChestConverter;
 
 import org.bukkit.Bukkit;
+import org.bukkit.OfflinePlayer;
 import org.bukkit.entity.Player;
 import org.bukkit.event.EventHandler;
 import org.bukkit.event.Listener;
@@ -37,8 +39,8 @@ import org.bukkit.permissions.PermissionDefault;
 import org.bukkit.plugin.java.JavaPlugin;
 
 public class MobileTools extends JavaPlugin implements Listener {
-	private final Map<String, MobilePlayer> players = new HashMap<String, MobilePlayer>();
-	private final Map<String, MobilePlayerData> data = new HashMap<String, MobilePlayerData>();
+	private final Map<UUID, MobilePlayer> players = new HashMap<UUID, MobilePlayer>();
+	private final Map<UUID, MobilePlayerData> data = new HashMap<UUID, MobilePlayerData>();
 
 	private File playerData;
 	private MobileConfiguration config;
@@ -56,26 +58,16 @@ public class MobileTools extends JavaPlugin implements Listener {
 		/**
 		 * Command permissions.
 		 */
-		this.config.addDefault("cmd",
-				new Permission("mobiletools.cmd", PermissionDefault.OP));
-		this.config.addDefault("craft.cmd",
-				new Permission("mobiletools.craft.cmd", PermissionDefault.OP));
-		this.config.addDefault("chest.cmd",
-				new Permission("mobiletools.chest.cmd", PermissionDefault.OP));
-		this.config.addDefault("chest.cmd.other",
-				new Permission("mobiletools.chest.cmd.other", PermissionDefault.OP));
-		this.config.addDefault("workbench.cmd",
-				new Permission("mobiletools.workbench.cmd", PermissionDefault.OP));
-		this.config.addDefault("furnace.cmd",
-				new Permission("mobiletools.furnace.cmd", PermissionDefault.OP));
-		this.config.addDefault("anvil.cmd",
-				new Permission("mobiletools.anvil.cmd", PermissionDefault.OP));
-		this.config.addDefault("brew.cmd",
-				new Permission("mobiletools.brew.cmd", PermissionDefault.OP));
-		this.config.addDefault("enchant.cmd",
-				new Permission("mobiletools.enchant.cmd", PermissionDefault.OP));
-		this.config.addDefault("ender.cmd",
-				new Permission("mobiletools.ender.cmd", PermissionDefault.OP));
+		this.config.addDefault("cmd", new Permission("mobiletools.cmd", PermissionDefault.OP));
+		this.config.addDefault("craft.cmd", new Permission("mobiletools.craft.cmd", PermissionDefault.OP));
+		this.config.addDefault("chest.cmd", new Permission("mobiletools.chest.cmd", PermissionDefault.OP));
+		this.config.addDefault("chest.cmd.other", new Permission("mobiletools.chest.cmd.other", PermissionDefault.OP));
+		this.config.addDefault("workbench.cmd", new Permission("mobiletools.workbench.cmd", PermissionDefault.OP));
+		this.config.addDefault("furnace.cmd", new Permission("mobiletools.furnace.cmd", PermissionDefault.OP));
+		this.config.addDefault("anvil.cmd", new Permission("mobiletools.anvil.cmd", PermissionDefault.OP));
+		this.config.addDefault("brew.cmd", new Permission("mobiletools.brew.cmd", PermissionDefault.OP));
+		this.config.addDefault("enchant.cmd", new Permission("mobiletools.enchant.cmd", PermissionDefault.OP));
+		this.config.addDefault("ender.cmd", new Permission("mobiletools.ender.cmd", PermissionDefault.OP));
 
 		/**
 		 * Enchanting table levels.
@@ -87,12 +79,9 @@ public class MobileTools extends JavaPlugin implements Listener {
 		/**
 		 * Inventories to lose on death.
 		 */
-		this.config.addDefault("chest.loseondeath",
-				new Permission("mobiletools.chest.loseondeath", PermissionDefault.FALSE));
-		this.config.addDefault("brew.loseondeath",
-				new Permission("mobiletools.brew.loseondeath", PermissionDefault.FALSE));
-		this.config.addDefault("furnace.loseondeath",
-				new Permission("mobiletools.furnace.loseondeath", PermissionDefault.FALSE));
+		this.config.addDefault("chest.loseondeath", new Permission("mobiletools.chest.loseondeath", PermissionDefault.FALSE));
+		this.config.addDefault("brew.loseondeath", new Permission("mobiletools.brew.loseondeath", PermissionDefault.FALSE));
+		this.config.addDefault("furnace.loseondeath", new Permission("mobiletools.furnace.loseondeath", PermissionDefault.FALSE));
 
 		/**
 		 * Delay for furnaces or brewing stand to tick.
@@ -156,13 +145,15 @@ public class MobileTools extends JavaPlugin implements Listener {
 	 * @param player
 	 * @return data
 	 */
-	public MobilePlayerData getPlayerData(String player) {
-		if (this.data.containsKey(player)) {
-			return this.data.get(player);
+	public MobilePlayerData getPlayerData(OfflinePlayer player) {
+		UUID uuid = player.getUniqueId();
+
+		if (this.data.containsKey(uuid)) {
+			return this.data.get(uuid);
 		}
 
 		MobilePlayerData data = new MobilePlayerData(this, player);
-		this.data.put(player, data);
+		this.data.put(uuid, data);
 		return data;
 	}
 
@@ -172,14 +163,14 @@ public class MobileTools extends JavaPlugin implements Listener {
 	 * @return mobilePlayer
 	 */
 	public MobilePlayer getPlayer(Player player) {
-		String name = player.getName();
+		UUID uuid = player.getUniqueId();
 
-		if (this.players.containsKey(name)) {
-			return this.players.get(name);
+		if (this.players.containsKey(uuid)) {
+			return this.players.get(uuid);
 		}
 
 		MobilePlayer player1 = new MobilePlayer(this, player);
-		this.players.put(name, player1);
+		this.players.put(uuid, player1);
 		return player1;
 	}
 
@@ -189,13 +180,13 @@ public class MobileTools extends JavaPlugin implements Listener {
 	 * @return removed
 	 */
 	private boolean removePlayer(Player player) {
-		String name = player.getName();
+		UUID uuid = player.getUniqueId();
 
-		if (!this.players.containsKey(name)) {
+		if (!this.players.containsKey(uuid)) {
 			return false;
 		}
 
-		this.players.remove(name).remove();
+		this.players.remove(uuid).remove();
 		return true;
 	}
 }

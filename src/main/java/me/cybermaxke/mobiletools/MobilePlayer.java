@@ -68,7 +68,7 @@ public class MobilePlayer {
 		this.brewingStand = new EntityBrewingStand(this.handle);
 
 		this.config = plugin.getConfiguration();
-		this.data = plugin.getPlayerData(player.getName());
+		this.data = plugin.getPlayerData(player);
 
 		this.load();
 	}
@@ -105,8 +105,7 @@ public class MobilePlayer {
 		WorkbenchContainer container = new WorkbenchContainer(this.handle);
 
 		int c = this.handle.nextContainerCounter();
-		this.handle.playerConnection
-				.sendPacket(new PacketPlayOutOpenWindow(c, 1, "Crafting", 9, true));
+		this.handle.playerConnection.sendPacket(new PacketPlayOutOpenWindow(c, 1, "Crafting", 9, true));
 		this.handle.activeContainer = container;
 		this.handle.activeContainer.windowId = c;
 		this.handle.activeContainer.addSlotListener(this.handle);
@@ -116,8 +115,7 @@ public class MobilePlayer {
 		EnchantTableContainer container = new EnchantTableContainer(this.config, this.handle);
 		
 		int c = this.handle.nextContainerCounter();
-		this.handle.playerConnection.sendPacket(
-				new PacketPlayOutOpenWindow(c, 4, "Enchant", 9, true));
+		this.handle.playerConnection.sendPacket(new PacketPlayOutOpenWindow(c, 4, "Enchant", 9, true));
 		this.handle.activeContainer = container;
 		this.handle.activeContainer.windowId = c;
 		this.handle.activeContainer.addSlotListener(this.handle);
@@ -127,8 +125,7 @@ public class MobilePlayer {
 		AnvilContainer container = new AnvilContainer(this.handle);
 
 		int c = this.handle.nextContainerCounter();
-		this.handle.playerConnection.sendPacket(
-				new PacketPlayOutOpenWindow(c, 8, "Repairing", 9, true));
+		this.handle.playerConnection.sendPacket(new PacketPlayOutOpenWindow(c, 8, "Repairing", 9, true));
 		this.handle.activeContainer = container;
 		this.handle.activeContainer.windowId = c;
 		this.handle.activeContainer.addSlotListener(this.handle);
@@ -143,8 +140,7 @@ public class MobilePlayer {
 		org.bukkit.inventory.ItemStack[] items = this.chest.getContents();
 		this.chest = Bukkit.createInventory(this.player, newSize);
 
-		for (int i = 0; i < (items.length > this.chest.getSize() ? this.chest.getSize() :
-				items.length); i++) {
+		for (int i = 0; i < (items.length > this.chest.getSize() ? this.chest.getSize() : items.length); i++) {
 			this.chest.setItem(i, items[i]);
 		}
 	}
@@ -153,8 +149,7 @@ public class MobilePlayer {
 		int maxSize = 54;
 		int size = 9;
 		for (int i = 1; i <= (maxSize / 9); i++) {
-			if (this.player.hasPermission(new Permission("mobiletools.chestsize." + (i * 9),
-					PermissionDefault.OP))) {
+			if (this.player.hasPermission(new Permission("mobiletools.chestsize." + (i * 9), PermissionDefault.OP))) {
 				size = i * 9;
 			}
 		}
@@ -215,8 +210,7 @@ public class MobilePlayer {
 
 					CraftItemStack item = CraftItemStack.asCraftMirror(itemstack);
 
-					PrepareItemEnchantEvent event = new PrepareItemEnchantEvent(this.player,
-							this.getBukkitView(), null, item, this.costs, 0);
+					PrepareItemEnchantEvent event = new PrepareItemEnchantEvent(this.player, this.getBukkitView(), null, item, this.costs, 0);
 					event.setCancelled(!itemstack.x());
 
 					this.player.getServer().getPluginManager().callEvent(event);
